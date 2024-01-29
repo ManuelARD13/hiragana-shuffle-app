@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 
-function Input() {
-  const [ input, setInput ] = useState("");
-  const [ answer, setAnswer ] = useState("");
+type InputProps = {
+  validateAnswer: (input: string) => boolean
+}
+
+function Input({validateAnswer }: InputProps) {
+
+  const [ input, setInput ] = useState<string>("");
   
-  const handleSubmit = () => {
-    if (input) {
-      setAnswer(input);
-    }
+  const handleSubmit = (): void => {
+    validateAnswer(input);
+    location.reload();
   }
 
   return (

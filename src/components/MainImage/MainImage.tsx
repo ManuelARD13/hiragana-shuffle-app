@@ -1,66 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import charSet from "../../data.json";
+import { HiraganaCharset, KatakanaCharset } from '../../models/charsets.model';
 
 
-const charSet = {
-    "a": "ぁ",
-    "i": "ぃ",
-    "u": "ぅ",
-    "e": "ぇ",
-    "o": "ぉ",
-    "ka": "か",
-    "ki": "き",
-    "ku": "く",
-    "ke": "け",
-    "ko": "こ",
-    "sa": "さ",
-    "shi": "し",
-    "su": "す",
-    "se": "せ",
-    "so": "そ",
-    "ta": "た",
-    "chi": "ち",
-    "tsu": "つ",
-    "te": "て",
-    "to": "と",
-    "na": "な",
-    "ni": "に",
-    "nu": "ぬ",
-    "ne": "ね",
-    "no": "の",
-    "ha": "は",
-    "hi": "ひ",
-    "fu": "ふ",
-    "he": "へ",
-    "ho": "ほ",
-    "ma": "ま",
-    "mi": "み",
-    "mu": "む",
-    "me": "め",
-    "mo": "も",
-    "ya": "や",
-    "yu": "ゆ",
-    "yo": "よ",
-    "ra": "ら",
-    "ri": "り",
-    "ru": "る",
-    "re": "れ",
-    "ro": "ろ",
-    "wa": "わ",
-    "wo": "を",
-    "n": "ん"
+
+function MainImage({ char, setChar }: any) {
+
+  const hiragana: HiraganaCharset | undefined = charSet[0].hiragana?.base
+  const katakana: KatakanaCharset | undefined = charSet[1].katakana?.base
+
+  const randomChar = (charset: HiraganaCharset | KatakanaCharset): void => {
+    if(Object.keys(charset).length > 0) {
+      setChar(Object.entries(charset)[Math.floor(Math.random() * Object.keys(charset).length)]);
+    } else {
+      setChar("");
+    }
+    
   }
 
-function MainImage() {
-
-
-  const randomChar = () => {
-    return Object.values(charSet)[Math.floor(Math.random() * Object.keys(charSet).length)];
-  }
+  useEffect(() => {
+    if(hiragana) {
+      randomChar(hiragana);
+    }
+  }, []);
 
   return (
     <div className='main-image'>
       <p>
-      {randomChar()}
+        {char[1]}
       </p>
     </div>
   );

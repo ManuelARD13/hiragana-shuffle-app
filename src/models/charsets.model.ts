@@ -1,0 +1,50 @@
+interface Charset {
+  readonly a:   string;
+  readonly i:   string;
+  readonly u:   string;
+  readonly e:   string;
+  readonly o:   string;
+  readonly ka:  string;
+  readonly ki:  string;
+  readonly ku:  string;
+  readonly ke:  string;
+  readonly ko:  string;
+  readonly sa:  string;
+  readonly shi: string;
+  readonly su:  string;
+  readonly se:  string;
+  readonly so:  string;
+  readonly ta:  string;
+  readonly chi: string;
+  readonly tsu: string;
+  readonly te:  string;
+  readonly to:  string;
+  readonly na:  string;
+  readonly ni:  string;
+  readonly nu:  string;
+  readonly ne:  string;
+  readonly no:  string;
+  readonly ha:  string;
+  readonly hi:  string;
+  readonly he:  string;
+  readonly ho:  string;
+  readonly ma:  string;
+  readonly mi:  string;
+  readonly mu:  string;
+  readonly me:  string;
+  readonly mo:  string;
+  readonly ya:  string;
+  readonly yu:  string;
+  readonly yo:  string;
+  readonly ra:  string;
+  readonly ri:  string;
+  readonly ru:  string;
+  readonly re:  string;
+  readonly ro:  string;
+  readonly wa:  string;
+  readonly wo:  string;
+  readonly n:   string;
+}
+
+export interface KatakanaCharset extends Charset {}
+export interface HiraganaCharset extends Charset {}
