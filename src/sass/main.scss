@@ -1,3 +1,5 @@
-@use "./patterns";
-@use "./globals";
-@use "./components/MainImage";
+@use "base/patterns";
+@use "components/App";
+@use "components/MainImage";
+@use "components/Input";
+@use "components/Scores";

@@ -30,7 +30,7 @@ function Scores({ score, level }: ScoresProps) {
 
   return (
     <div>
-      <div>
+      <div className='scores'>
         <p>SCORE: <span>{score}</span></p>
         <p>TIME: <span>{timer}</span></p>
         <p>LEVEL: <span>{level}</span></p>
