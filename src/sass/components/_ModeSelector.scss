@@ -1,0 +1,22 @@
+fieldset {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border: none;
+  input {
+    display: none;
+  }
+  label {
+    cursor: pointer;
+    margin: 1em;
+    padding: 1.5em;
+    border: 4px solid $neutral-color;
+    transition: transform 0.15s ease-in-out;
+    &:hover {
+      background-color: $neutral-color;
+      color: $primary-color;
+      transform: translate(0, -10px);
+      transition: transform 0.15s ease-in-out;
+    }
+  } 
+}
