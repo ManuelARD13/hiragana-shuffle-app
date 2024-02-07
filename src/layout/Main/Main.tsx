@@ -111,7 +111,7 @@ function Main() {
   }, []);
 
   const validateAnswer = (input: string): boolean => {
-    if (char.romaji === input) {
+    if (char.romaji === input.toLocaleLowerCase()) {
       return true;
     } else {
       return false;
