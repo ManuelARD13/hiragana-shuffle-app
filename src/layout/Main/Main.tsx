@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useReducer } from "react";
 
-import { JPChar, ActionTypes } from "../../models/charsets.model";
+import type { JPChar, ActionTypes } from "../../models/charsets.model";
 
 import charSets from "../../data.json";
 
 import MainImage from "../../components/MainImage/MainImage";
-import Input from "../../components/Input/Input";
-import Scores from "../../components/Scores/Scores";
 import StartModal from "../../components/StartModal/StartModal";
 import PermissionsModal from "../../components/PermissionsModal/PermissionsModal";
 import GameOverModal from "../../components/GameOverModal/GameOverModal";
+import InputLayout from "../InputLayout/InputLayout";
 
 function Main() {
   const [char, setChar] = useState<JPChar>({
@@ -30,7 +29,7 @@ function Main() {
   const hiraganaWords: JPChar[] | undefined = charSets.words.hiragana;
   const katakanaWords: JPChar[] | undefined = charSets.words.katakana;
 
-  const [score, setScore] = useState<number>(0);
+  
   const [gameCharset, setGameCharset] = useState<JPChar[] | undefined>(
     hiragana
   );
@@ -110,13 +109,7 @@ function Main() {
     }
   }, []);
 
-  const validateAnswer = (input: string): boolean => {
-    if (char.romaji === input.toLocaleLowerCase()) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+ 
 
   useEffect(() => {
     const backgroundImages = [
@@ -128,6 +121,8 @@ function Main() {
     const randomIndex = Math.floor(Math.random() * backgroundImages.length);
     setBackgroundImage(backgroundImages[randomIndex]);
   }, []);
+
+  
 
   return (
     <>
@@ -156,13 +151,7 @@ function Main() {
             </div>
           </div>
           <MainImage char={char.character} />
-          <Input
-            validateAnswer={validateAnswer}
-            setScore={setScore}
-            score={score}
-            updateGameCharset={updateGameCharset}
-          />
-          <Scores score={score} level={1} isGameRunning={isGameRunning} />
+          <InputLayout char={char} updateGameCharset={updateGameCharset} isGameRunning={isGameRunning} />
         </main>
       ): null
     }

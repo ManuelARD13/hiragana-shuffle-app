@@ -1,0 +1,33 @@
+@use "../abstracts/variables" as *;
+
+.keyboard {
+  position: relative;
+  margin: 3em auto;
+  &__key {
+    width: 1.9rem;
+    background-color: $primary-color;
+    color: $text-color-light;
+    font-family: $font-zen-maru-gothic;
+    border: 2px solid $text-color-light;
+    border-radius: 0.25em;
+    box-shadow: $box-shadow;
+  }
+  &__key--enter {
+    @extend .keyboard__key;
+    width: 4.1em;
+    font-family: $font-mochiy-pop-p-one;
+    position: absolute;
+    bottom: 3%;
+    right: 1%;
+    z-index: 1;
+    height: 4rem;
+  }
+  &__key--backspace {
+    @extend .keyboard__key;
+    width: 6.1em;
+    font-family: $font-mochiy-pop-p-one;
+    position: absolute;
+    bottom: 3%;
+    right: 21%;
+  }
+}
