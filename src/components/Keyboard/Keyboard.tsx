@@ -27,14 +27,17 @@ function Keyboard({ setInput, input, handleSubmit }: KeyboardProps) {
     "H",
     "J",
     "K",
+    "L",
     "Z",
+    "X",
     "C",
     "B",
+    "V",
     "N",
     "M",
   ];
 
-  const handleClick = (event: React.TouchEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     const target: string = event.currentTarget.id;
     if (target !== "enter" && target !== "backspace") {
       setInput(input + target.toLocaleLowerCase());
@@ -49,48 +52,43 @@ function Keyboard({ setInput, input, handleSubmit }: KeyboardProps) {
     <>
       <table className="keyboard">
         <tbody>
-          <tr>
+          <tr className="keyboard__row">
             {keys.slice(0, 10).map((key) => (
               <td>
                 <button
-                  id="key"
+                  key={key}
+                  id={key}
                   className="keyboard__key"
-                  onTouchStart={handleClick}
+                  onClick={handleClick}
                 >
                   {key}
                 </button>
               </td>
             ))}
           </tr>
-          <tr>
-            {keys.slice(10, 18).map((key) => (
+          <tr className="keyboard__row">
+            {keys.slice(10, 19).map((key) => (
               <td>
                 <button
-                  id="key"
+                  key={key}
+                  id={key}
                   className="keyboard__key"
-                  onTouchStart={handleClick}
+                  onClick={handleClick}
                 >
                   {key}
                 </button>
               </td>
             ))}
-            <td>
-              <button
-                id="enter"
-                className="keyboard__key--enter"
-                onTouchStart={handleClick}
-              >
-                行け！
-              </button>
-            </td>
+            
           </tr>
-          <tr>
-            {keys.slice(18, keys.length).map((key) => (
+          <tr className="keyboard__row--last">
+            {keys.slice(19, keys.length).map((key) => (
               <td>
                 <button
-                  id="key"
+                  key={key}
+                  id={key}
                   className="keyboard__key"
-                  onTouchStart={handleClick}
+                  onClick={handleClick}
                 >
                   {key}
                 </button>
@@ -100,9 +98,20 @@ function Keyboard({ setInput, input, handleSubmit }: KeyboardProps) {
               <button
                 id="backspace"
                 className="keyboard__key--backspace"
-                onTouchStart={handleClick}
+                onClick={handleClick}
               >
-                {"<-"}
+                {"<"}
+              </button>
+            </td>
+          </tr>
+          <tr>
+          <td>
+              <button
+                id="enter"
+                className="keyboard__key--enter"
+                onClick={handleClick}
+              >
+                行け！
               </button>
             </td>
           </tr>

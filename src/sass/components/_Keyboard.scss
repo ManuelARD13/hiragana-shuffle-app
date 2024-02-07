@@ -2,32 +2,36 @@
 
 .keyboard {
   position: relative;
-  margin: 3em auto;
+  margin: 0 auto;
+  bottom: -8%;
+  &__row {
+    display: flex;
+    justify-content: center;
+  }
+  &__row--last {
+    @extend .keyboard__row;
+  }
   &__key {
-    width: 1.9rem;
+    width: 2.25rem;
+    height: 2.75rem;
     background-color: $primary-color;
     color: $text-color-light;
     font-family: $font-zen-maru-gothic;
+    font-size: 1.2rem;
     border: 2px solid $text-color-light;
     border-radius: 0.25em;
     box-shadow: $box-shadow;
   }
   &__key--enter {
     @extend .keyboard__key;
-    width: 4.1em;
+    width: 60%;
     font-family: $font-mochiy-pop-p-one;
-    position: absolute;
-    bottom: 3%;
-    right: 1%;
-    z-index: 1;
-    height: 4rem;
   }
   &__key--backspace {
     @extend .keyboard__key;
-    width: 6.1em;
+    width: 3em;
     font-family: $font-mochiy-pop-p-one;
-    position: absolute;
-    bottom: 3%;
-    right: 21%;
+    position: relative;
+    box-shadow: none;
   }
 }

@@ -16,7 +16,6 @@ function InputDisplay({ input, message, setInput, handleSubmit }: InputProps) {
       <div className="input__form">
         <input
           type="text"
-          autoFocus
           value={input}
           placeholder="'ha'"
           onChange={(e) => setInput(e.target.value)}

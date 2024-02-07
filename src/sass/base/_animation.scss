@@ -62,8 +62,15 @@
 }
 
  @keyframes display-none {
-   from{display: block;}
-   to {display: none;}
+  0% {
+    display: block;
+  }
+  100% {
+    display: none;
+    
+  }
+  //  from{display: block;}
+  //  to {display: none;}
  }
 
 /* ----------------------------------------------
