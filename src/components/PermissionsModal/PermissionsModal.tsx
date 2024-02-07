@@ -2,9 +2,13 @@ import React from "react";
 import Modal from "../../common/Modal/Modal";
 
 function PermissionsModal({ buttonCallback, setAudioAllowed }: { buttonCallback: () => void, setAudioAllowed: (value: boolean) => void }) {
+  const allowFullScreen = () => {
+    document.body.requestFullscreen();
+    buttonCallback();
+  }
   return (
     <Modal
-      buttonCallback={buttonCallback}
+      buttonCallback={allowFullScreen}
       buttonText={"Allow"}
       buttonClassName={"permissions-modal__btn"}
       className="permissions-modal"
