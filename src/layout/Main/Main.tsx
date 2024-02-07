@@ -8,12 +8,16 @@ import MainImage from "../../components/MainImage/MainImage";
 import Input from "../../components/Input/Input";
 import Scores from "../../components/Scores/Scores";
 import StartModal from "../../components/StartModal/StartModal";
+import PermissionsModal from "../../components/PermissionsModal/PermissionsModal";
 
 function Main() {
   const [char, setChar] = useState<JPChar>({
     character: "",
     romaji: "",
   });
+
+  const [screen, setScreen] = useState<string>("permissions");
+  const [isAudioAllowed, setIsAudioAllowed] = useState<boolean>(true);
 
   //Charsets
   const hiragana: JPChar[] | undefined = charSets.hiragana.base;
@@ -30,6 +34,7 @@ function Main() {
     hiragana
   );
   const [isGameRunning, setIsGameRunning] = useState<boolean>(false);
+  const [backgroundImage, setBackgroundImage] = useState<string>("");
 
   const chartsetReducer = (state: JPChar[], action: ActionTypes) => {
     switch (action) {
@@ -72,21 +77,6 @@ function Main() {
 
   const [charSet, dispatch] = useReducer(chartsetReducer, hiragana);
 
-  const updateGameCharset = (): void => {
-    if (gameCharset) {
-      if (gameCharset?.length > 0) {
-        const newCharset = gameCharset?.filter(
-          (character) => char.romaji !== character.romaji
-        );
-        setGameCharset(newCharset);
-      } else {
-        setIsGameRunning(false);
-        alert("Game over");
-        window.location.reload();
-      }
-    }
-  };
-
   const randomChar = (charset: JPChar[]): void => {
     if (charset.length > 0) {
       const randomChar = charset[Math.floor(Math.random() * charset.length)];
@@ -96,19 +86,28 @@ function Main() {
     }
   };
 
-  useEffect(() => {
-    updateGameCharset();
-  }, [gameCharset]);
+  const updateGameCharset = (): void => {
+    if (gameCharset) {
+      if (gameCharset.length >= 1) {
+        const newCharset = gameCharset?.filter(
+          (character) => char.romaji !== character.romaji
+        );
+        setGameCharset(newCharset);
+        randomChar(newCharset);
+        if (newCharset.length === 0) {
+          setIsGameRunning(false);
+          alert("Game over");
+          window.location.reload();
+        }
+      }
+    }
+  };
 
   useEffect(() => {
     if (gameCharset) {
       randomChar(gameCharset);
     }
-  }, [score, isGameRunning]);
-
-  useEffect(() => {
-    setGameCharset(charSet);
-  }, [charSet]);
+  }, []);
 
   const validateAnswer = (input: string): boolean => {
     if (char.romaji === input) {
@@ -118,19 +117,46 @@ function Main() {
     }
   };
 
+  useEffect(() => {
+    const backgroundImages = [
+      require("../../img/temple-day-bk.jpg").default,
+      require("../../img/night-jp-bk.jpg").default,
+      require("../../img/school-day-bk.jpg").default,
+      require("../../img/street-day-bk.jpg").default,
+    ];
+    const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+    setBackgroundImage(backgroundImages[randomIndex]);
+  }, []);
+
   return (
     <>
-      <StartModal setIsGameRunning={setIsGameRunning} />
-      <main>
-        <h1>Higarana Shuffle</h1>
-        <MainImage char={char.character} />
-        <Input
-          validateAnswer={validateAnswer}
-          setScore={setScore}
-          score={score}
+      {screen === "permissions" ? (
+        <PermissionsModal
+          buttonCallback={() => setScreen("start")}
+          setAudioAllowed={setIsAudioAllowed}
         />
-        <Scores score={score} level={1} isGameRunning={isGameRunning} />
-      </main>
+      ) : null}
+      {screen === "start" ? (
+        <StartModal
+          setIsGameRunning={setIsGameRunning}
+          isAudioAllowed={isAudioAllowed}
+        />
+      ) : null}
+
+      {isGameRunning && (
+        <main className="main" style={{ backgroundImage: `url(${backgroundImage})` }}>
+          <div className="overlay"></div>
+          <h1>Higarana Shuffle</h1>
+          <MainImage char={char.character} />
+          <Input
+            validateAnswer={validateAnswer}
+            setScore={setScore}
+            score={score}
+            updateGameCharset={updateGameCharset}
+          />
+          <Scores score={score} level={1} isGameRunning={isGameRunning} />
+        </main>
+      )}
     </>
   );
 }

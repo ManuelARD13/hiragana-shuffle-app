@@ -1,0 +1,56 @@
+@use "../abstracts/variables" as *;
+
+.permissions-modal {
+  background: rgb(255, 255, 255);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 1) 10%,
+    rgba(255, 255, 255, 1) 28%,
+    rgba(252, 252, 252, 1) 47%,
+    rgba(247, 247, 247, 1) 57%,
+    rgba(212, 212, 212, 1) 85%,
+    rgba(159, 159, 159, 1) 100%,
+    rgba(84, 84, 84, 1) 100%
+  );
+  
+  &__icon {
+    position: relative;
+    background-color: $primary-color;
+    width: 5.5rem;
+    height: 5.5rem;
+    clip-path: circle();
+    svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  p {
+    font-family: $font-zen-maru-gothic;
+    text-align: center;
+    max-width: 85%;
+  }
+
+  &__btn {
+    font-family: $font-mochiy-pop-p-one;
+    font-size: 0.75rem;
+    background-color: $primary-color;
+    color: $text-color-light;
+    border: 4px solid $text-color-light;
+    border-radius: 2em;
+    box-shadow: $box-shadow;
+    margin-top: 1.5em;
+    padding: 1em;
+    width: 10em;
+    &:hover {
+      transform: translate(0, -5px);
+      transition: transform 0.15s ease-in-out;
+    }
+  }
+  &__btn--cancel {
+    @extend .permissions-modal__btn;
+    background: gray;
+  }
+}

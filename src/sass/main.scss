@@ -1,7 +1,9 @@
-@use "base/patterns";
+@use "base/modal";
+@use "base/animation";
+
 @use "components/App";
 @use "components/MainImage";
 @use "components/Input";
 @use "components/Scores";
-@use "base/modal";
 @use "components/StartModal";
+@use "components/PermissionsModal";
