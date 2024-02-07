@@ -9,6 +9,7 @@ import Input from "../../components/Input/Input";
 import Scores from "../../components/Scores/Scores";
 import StartModal from "../../components/StartModal/StartModal";
 import PermissionsModal from "../../components/PermissionsModal/PermissionsModal";
+import GameOverModal from "../../components/GameOverModal/GameOverModal";
 
 function Main() {
   const [char, setChar] = useState<JPChar>({
@@ -34,6 +35,7 @@ function Main() {
     hiragana
   );
   const [isGameRunning, setIsGameRunning] = useState<boolean>(false);
+  const [isGameOver, setIsGameOver] = useState<boolean>(false);
   const [backgroundImage, setBackgroundImage] = useState<string>("");
 
   const chartsetReducer = (state: JPChar[], action: ActionTypes) => {
@@ -96,8 +98,7 @@ function Main() {
         randomChar(newCharset);
         if (newCharset.length === 0) {
           setIsGameRunning(false);
-          alert("Game over");
-          window.location.reload();
+          setIsGameOver(true);
         }
       }
     }
@@ -143,10 +144,17 @@ function Main() {
         />
       ) : null}
 
-      {isGameRunning && (
+      {isGameRunning ? (
         <main className="main" style={{ backgroundImage: `url(${backgroundImage})` }}>
           <div className="overlay"></div>
-          <h1>Higarana Shuffle</h1>
+          <div className="main__header">
+            <div className="logo-icon">
+              <p>大</p>
+            </div>
+            <div className="main__header-title">
+              <h1>Game Mode Title</h1>
+            </div>
+          </div>
           <MainImage char={char.character} />
           <Input
             validateAnswer={validateAnswer}
@@ -156,7 +164,11 @@ function Main() {
           />
           <Scores score={score} level={1} isGameRunning={isGameRunning} />
         </main>
-      )}
+      ): null
+    }
+      {
+        isGameOver ? <GameOverModal setIsGameOver={setIsGameOver} setScreen={setScreen} /> : null
+      }
     </>
   );
 }

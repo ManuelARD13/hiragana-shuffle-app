@@ -46,8 +46,8 @@ function Modal({
       .classList.add("modal-transition");
     setTimeout(() => {
       modal.current?.classList.toggle("modal-hidden");
-      setIsActive(false);
       buttonCallback();
+      setIsActive(false);
     }, 1500);
   };
 
