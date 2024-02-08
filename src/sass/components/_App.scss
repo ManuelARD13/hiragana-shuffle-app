@@ -9,6 +9,8 @@ body {
 .main {
   height: 100vh;
   max-height: 100svh;
+  display: grid;
+  grid-template-rows: repeat(12, 1fr);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -45,6 +47,7 @@ body {
     }
   }
   &__header {
+    grid-row: 1 / span 1;
     display: flex;
     justify-content: space-around;
     align-items: center;

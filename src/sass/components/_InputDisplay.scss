@@ -1,9 +1,10 @@
 @use "../abstracts/variables" as *;
 
 .input {
+  grid-row: 5 / span 2;
   display: flex;
   width: 85%;
-  margin: 1em auto;
+  margin: 0 auto;
   flex-direction: column;
 
   &__message {

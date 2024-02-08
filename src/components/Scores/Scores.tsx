@@ -32,19 +32,16 @@ function Scores({ score, level, isGameRunning }: ScoresProps) {
   };
 
   return (
-    <div>
+    <>
       <div className="scores">
         <p>
-          SCORE: <span>{score}</span>
+          SCORE <span>{score}</span>
         </p>
         <p>
-          TIME: <span>{timer}</span>
-        </p>
-        <p>
-          LEVEL: <span>{level}</span>
+          TIME <span>{timer}</span>
         </p>
       </div>
-    </div>
+    </>
   );
 }
 
