@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
+import type { Dispatch } from "react";
 import Modal from "../../common/Modal/Modal";
 
+import { Screen } from "../../models/charsets.model";
+
 type StartModalProps = {
-  setIsGameRunning: (value: boolean) => void;
+  setScreen: Dispatch<Screen>;
   isAudioAllowed: boolean;
 };
 
-function StartModal({ setIsGameRunning, isAudioAllowed }: StartModalProps) {
+function StartModal({ setScreen, isAudioAllowed }: StartModalProps) {
   const mainTheme = require("../../music/Main-Theme.mp3").default;
 
   setInterval(() => {
@@ -31,6 +34,7 @@ function StartModal({ setIsGameRunning, isAudioAllowed }: StartModalProps) {
     }
   }
 
+
  useEffect(() => {
    const button = document.querySelector(".start-modal__btn");
    if (button) {
@@ -40,7 +44,7 @@ function StartModal({ setIsGameRunning, isAudioAllowed }: StartModalProps) {
 
   return (
     <Modal
-      buttonCallback={() => setIsGameRunning(true)}
+      buttonCallback={() => setScreen(Screen.modeSelector)}
       buttonClassName={"start-modal__btn slide-in-bottom"}
       buttonText={"START"}
       modalBackground={"day-jp-bk.jpg"}

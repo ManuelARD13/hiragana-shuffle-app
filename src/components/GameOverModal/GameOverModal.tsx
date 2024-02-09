@@ -2,7 +2,7 @@ import React from 'react';
 
 import Modal from '../../common/Modal/Modal';
 
-function GameOverModal({ setIsGameOver, setScreen }: { setIsGameOver: (value: boolean) => void, setScreen: (value: string) => void }) {
+function GameOverModal() {
   const handleClose = () => {
     window.location.reload();
   }

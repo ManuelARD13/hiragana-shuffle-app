@@ -1,13 +1,13 @@
 import React from 'react';
 import "./sass/main.scss"
-import Main from './layout/Main/Main';
+import AppUI from './layout/AppUI/AppUI';
 
 function App(): JSX.Element {
  
 
   return (
     <>
-      <Main />
+      <AppUI />
     </>
   );
 }

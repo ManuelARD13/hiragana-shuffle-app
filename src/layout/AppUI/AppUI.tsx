@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useReducer } from "react";
 
-import type { JPChar, ActionTypes } from "../../models/charsets.model";
+import { JPChar, ActionTypes, Screen } from "../../models/charsets.model";
 
 import charSets from "../../data.json";
 
@@ -9,14 +9,15 @@ import StartModal from "../../components/StartModal/StartModal";
 import PermissionsModal from "../../components/PermissionsModal/PermissionsModal";
 import GameOverModal from "../../components/GameOverModal/GameOverModal";
 import InputLayout from "../InputLayout/InputLayout";
+import ModeSelector from "../../components/ModeSelector/ModeSelector";
 
-function Main() {
+function AppUI() {
   const [char, setChar] = useState<JPChar>({
     character: "",
     romaji: "",
   });
 
-  const [screen, setScreen] = useState<string>("permissions");
+  const [screen, setScreen] = useState<Screen>(Screen.permissions);
   const [isAudioAllowed, setIsAudioAllowed] = useState<boolean>(true);
 
   //Charsets
@@ -29,9 +30,8 @@ function Main() {
   const hiraganaWords: JPChar[] | undefined = charSets.words.hiragana;
   const katakanaWords: JPChar[] | undefined = charSets.words.katakana;
 
-  
   const [gameCharset, setGameCharset] = useState<JPChar[] | undefined>(
-    hiragana
+    undefined
   );
   const [isGameRunning, setIsGameRunning] = useState<boolean>(false);
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
@@ -94,7 +94,7 @@ function Main() {
           (character) => char.romaji !== character.romaji
         );
         setGameCharset(newCharset);
-        randomChar(newCharset);
+   
         if (newCharset.length === 0) {
           setIsGameRunning(false);
           setIsGameOver(true);
@@ -104,12 +104,16 @@ function Main() {
   };
 
   useEffect(() => {
-    if (gameCharset) {
-      randomChar(gameCharset);
-    }
-  }, []);
+    if(gameCharset){randomChar(gameCharset);}
+  }, [gameCharset])
 
- 
+  // useEffect(() => {
+  //   if (gameCharset) {
+  //     randomChar(gameCharset);
+  //   } else {
+  //     randomChar(charSet);
+  //   }
+  // }, []);
 
   useEffect(() => {
     const backgroundImages = [
@@ -122,25 +126,31 @@ function Main() {
     setBackgroundImage(backgroundImages[randomIndex]);
   }, []);
 
-  
-
   return (
     <>
-      {screen === "permissions" ? (
+      {screen === Screen.permissions ? (
         <PermissionsModal
-          buttonCallback={() => setScreen("start")}
+          buttonCallback={() => setScreen(Screen.intro)}
           setAudioAllowed={setIsAudioAllowed}
         />
       ) : null}
-      {screen === "start" ? (
-        <StartModal
+      {screen === Screen.intro ? (
+        <StartModal setScreen={setScreen} isAudioAllowed={isAudioAllowed} />
+      ) : null}
+      {screen === Screen.modeSelector ? (
+        <ModeSelector
+          dispatch={dispatch}
+          buttonCallback={setScreen}
           setIsGameRunning={setIsGameRunning}
-          isAudioAllowed={isAudioAllowed}
+          setGameCharset={() => setGameCharset(charSet)}
         />
       ) : null}
 
       {isGameRunning ? (
-        <main className="main" style={{ backgroundImage: `url(${backgroundImage})` }}>
+        <main
+          className="main"
+          style={{ backgroundImage: `url(${backgroundImage})` }}
+        >
           <div className="overlay"></div>
           <div className="main__header">
             <div className="logo-icon">
@@ -151,15 +161,16 @@ function Main() {
             </div>
           </div>
           <MainImage char={char.character} />
-          <InputLayout char={char} updateGameCharset={updateGameCharset} isGameRunning={isGameRunning} />
+          <InputLayout
+            char={char}
+            updateGameCharset={updateGameCharset}
+            isGameRunning={isGameRunning}
+          />
         </main>
-      ): null
-    }
-      {
-        isGameOver ? <GameOverModal setIsGameOver={setIsGameOver} setScreen={setScreen} /> : null
-      }
+      ) : null}
+      {isGameOver ? <GameOverModal /> : null}
     </>
   );
 }
 
-export default Main;
+export default AppUI;

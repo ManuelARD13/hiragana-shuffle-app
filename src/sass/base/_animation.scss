@@ -13,6 +13,11 @@
 	        animation: slide-in-bottom 0.85s cubic-bezier(0.250, 0.460, 0.450, 0.940) 5s both;
 }
 
+.slide-in-bottom-instant {
+	-webkit-animation: slide-in-bottom 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-in-bottom 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
 .slide-out-elliptic-top-bck {
 	-webkit-animation: slide-out-elliptic-top-bck 0.5s ease-in both;
 	        animation: slide-out-elliptic-top-bck 0.5s ease-in both;

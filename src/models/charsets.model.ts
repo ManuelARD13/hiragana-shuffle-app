@@ -16,3 +16,10 @@ export enum ActionTypes {
   SET_HIRAGANA_SPECIAL = "SET_HIRAGANA_SPECIAL",
   SET_KATAKANA_SPECIAL = "SET_KATAKANA_SPECIAL",
 }
+
+export enum Screen {
+  start = "start",
+  modeSelector = "mode_selector",
+  intro = "intro",
+  permissions = "permissions",
+}

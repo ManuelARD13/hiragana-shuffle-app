@@ -1,15 +1,59 @@
-import React, { Dispatch } from "react";
+import React, { useState } from "react";
+import type { Dispatch } from "react";
+import { Screen } from "../../models/charsets.model";
 
-import { ActionTypes, JPChar } from "../../models/charsets.model";
+import Modal from "../../common/Modal/Modal";
 
+import { ActionTypes } from "../../models/charsets.model";
 
 interface ModeSelectorProps {
   dispatch: Dispatch<ActionTypes>;
-  gameCharset: JPChar[] | undefined;
-  randomChar: (charset: JPChar[]) => void;
+  buttonCallback: (value: Screen) => void;
+  setIsGameRunning: (value: boolean) => void;
+  setGameCharset: () => void;
 }
 
-function ModeSelector({ dispatch, gameCharset, randomChar }: ModeSelectorProps) {
+function ModeSelector({
+  dispatch,
+  buttonCallback,
+  setIsGameRunning,
+  setGameCharset,
+}: ModeSelectorProps) {
+
+  const modes = [
+    {
+      name: "Hiragana",
+      id: "hiragana",
+      isLocked: false,
+    },
+    {
+      name: "Katakana",
+      id: "katakana",
+      isLocked: false,
+    },
+    {
+      name: "Hiragana (Ten-Ten & Maru)",
+      id: "hiragana-2",
+      isLocked: false,
+    },
+    {
+      name: "Katakana (Ten-Ten & Maru)",
+      id: "katakana-2",
+      isLocked: false,
+    },
+    {
+      name: "Full Set!",
+      id: "hiragana-and-katakana",
+      isLocked: false,
+    },
+    {
+      name: "Japanese Words",
+      id: "hiragana-words",
+      isLocked: true,
+    }
+  ];
+
+  const button = document.querySelector(".mode-selector__btn");
 
   const levelRadioHandler = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -27,58 +71,85 @@ function ModeSelector({ dispatch, gameCharset, randomChar }: ModeSelectorProps) 
       } else if (level === "hiragana-and-katakana") {
         dispatch(ActionTypes.SET_HIRAGANA_AND_KATAKANA);
       } else if (level === "hiragana-words") {
-        dispatch(ActionTypes.SET_HIRAGANA_WORDS);
-      } else if (level === "katakana-words") {
+          if(modes[5].isLocked) {
+            const button = document.querySelector(".mode-selector__btn");
+            if(button) {button.classList.remove("active")}
+            return;
+          }
+        } else if (level === "katakana-words") {
         dispatch(ActionTypes.SET_KATAKANA_WORDS);
       } else if (level === "hiragana-special") {
         dispatch(ActionTypes.SET_HIRAGANA_SPECIAL);
       } else if (level === "katakana-special") {
         dispatch(ActionTypes.SET_KATAKANA_SPECIAL);
       }
-    }
 
+      if (button) {
+        button.classList.add("slide-in-bottom-instant");
+        button.classList.add("active")
+        button.addEventListener("click", handleCloseTransition);
+      }
+    }
   };
 
+  const handleClose = () => {
+    setGameCharset();
+    buttonCallback(Screen.start);
+    setIsGameRunning(true);
+  };
+
+  const handleCloseTransition = () => {
+    const radioSelectors = document.querySelectorAll(".mode-selector__label");
+    if (button) {
+      button.classList.add("puff-out-center");
+    }
+    if(radioSelectors.length > 0) {
+      radioSelectors.forEach((radioSelector) => {
+        radioSelector.classList.add("slide-out-elliptic-top-bck");
+      })
+    }
+  }
+
   return (
-  <>
-    <fieldset>
-      <label htmlFor="hiragana">hiragana</label>
-      <input
-        type="radio"
-        name="level"
-        id="hiragana"
-        onChange={levelRadioHandler}
-      />
-      <label htmlFor="katakana">katakana</label>
-      <input
-        type="radio"
-        name="level"
-        id="katakana"
-        onChange={levelRadioHandler}
-      />
-      <label htmlFor="hiragana-2">hiragana 2</label>
-      <input
-        type="radio"
-        name="level"
-        id="hiragana-2"
-        onChange={levelRadioHandler}
-      />
-      <label htmlFor="katakana-2">katakana 2</label>
-      <input
-        type="radio"
-        name="level"
-        id="katakana-2"
-        onChange={levelRadioHandler}
-      />
-      <label htmlFor="hiragana-and-katakana">hiragana and katakana</label>
-      <input
-        type="radio"
-        name="level"
-        id="hiragana-and-katakana"
-        onChange={levelRadioHandler}
-      />
-    </fieldset>
-    </>
+    <Modal
+      buttonCallback={handleClose}
+      buttonText={"Continue"}
+      modalBackground={"day-jp-bk.jpg"}
+      className="mode-selector"
+      buttonClassName="mode-selector__btn"
+    >
+      <h1>Which set are we gonna practice today?</h1>
+      <fieldset className="mode-selector__fieldset">
+        {modes.map((mode) => (
+          <>
+            <label
+              htmlFor={mode.id}
+              className={`mode-selector__label ${mode.isLocked ? "lock" : ""}`}
+            >
+              <p>{mode.name}</p>
+              <div className="mode-selector__label-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  className="bi bi-lock-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2" />
+                </svg>
+              </div>
+            </label>
+            <input
+              type="radio"
+              name="mode"
+              id={mode.id}
+              className="mode-selector__radio-input"
+              onChange={levelRadioHandler}
+            />
+          </>
+        ))}
+      </fieldset>
+    </Modal>
   );
 }
 

@@ -3,9 +3,10 @@
 @use "base/reset";
 
 @use "components/App";
+@use "components/PermissionsModal";
+@use "components/StartModal";
+@use "components/ModeSelector";
 @use "components/MainImage";
 @use "components/InputDisplay";
 @use "components/Scores";
-@use "components/StartModal";
-@use "components/PermissionsModal";
 @use "components/Keyboard";
