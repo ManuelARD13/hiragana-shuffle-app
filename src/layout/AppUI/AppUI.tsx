@@ -10,6 +10,7 @@ import PermissionsModal from "../../components/PermissionsModal/PermissionsModal
 import GameOverModal from "../../components/GameOverModal/GameOverModal";
 import InputLayout from "../InputLayout/InputLayout";
 import ModeSelector from "../../components/ModeSelector/ModeSelector";
+import SoundPlayer from "../../common/SoundPlayer/SoundPlayer";
 
 function AppUI() {
   const [char, setChar] = useState<JPChar>({
@@ -104,16 +105,8 @@ function AppUI() {
   };
 
   useEffect(() => {
-    if(gameCharset){randomChar(gameCharset);}
+    if(gameCharset){randomChar(gameCharset);} 
   }, [gameCharset])
-
-  // useEffect(() => {
-  //   if (gameCharset) {
-  //     randomChar(gameCharset);
-  //   } else {
-  //     randomChar(charSet);
-  //   }
-  // }, []);
 
   useEffect(() => {
     const backgroundImages = [
@@ -128,6 +121,7 @@ function AppUI() {
 
   return (
     <>
+      <SoundPlayer screen={screen} isAudioAllowed={isAudioAllowed} />
       {screen === Screen.permissions ? (
         <PermissionsModal
           buttonCallback={() => setScreen(Screen.intro)}

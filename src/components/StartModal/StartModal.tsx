@@ -9,8 +9,7 @@ type StartModalProps = {
   isAudioAllowed: boolean;
 };
 
-function StartModal({ setScreen, isAudioAllowed }: StartModalProps) {
-  const mainTheme = require("../../music/Main-Theme.mp3").default;
+function StartModal({ setScreen }: StartModalProps) {
 
   setInterval(() => {
     const logo = document.querySelector(".start-modal__logo");
@@ -68,7 +67,6 @@ function StartModal({ setScreen, isAudioAllowed }: StartModalProps) {
           <a href="#">Cosmic Games</a>
         </p>
       </div>
-       <audio src={mainTheme} autoPlay muted={!isAudioAllowed} loop />
     </Modal>
   );
 }

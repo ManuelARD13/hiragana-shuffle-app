@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { Dispatch } from "react";
 import { Screen } from "../../models/charsets.model";
 
@@ -19,7 +19,6 @@ function ModeSelector({
   setIsGameRunning,
   setGameCharset,
 }: ModeSelectorProps) {
-
   const modes = [
     {
       name: "Hiragana",
@@ -50,8 +49,10 @@ function ModeSelector({
       name: "Japanese Words",
       id: "hiragana-words",
       isLocked: true,
-    }
+    },
   ];
+
+  const [isModeSelected, setIsModeSelected] = useState<boolean>(false);
 
   const button = document.querySelector(".mode-selector__btn");
 
@@ -69,14 +70,17 @@ function ModeSelector({
       } else if (level === "katakana-2") {
         dispatch(ActionTypes.SET_KATAKANA_2);
       } else if (level === "hiragana-and-katakana") {
-        dispatch(ActionTypes.SET_HIRAGANA_AND_KATAKANA);
+        dispatch(ActionTypes.SET_HIRAGANA_AND_KATAKANA_FULL);
       } else if (level === "hiragana-words") {
-          if(modes[5].isLocked) {
-            const button = document.querySelector(".mode-selector__btn");
-            if(button) {button.classList.remove("active")}
-            return;
+        if (modes[5].isLocked) {
+          const button = document.querySelector(".mode-selector__btn");
+          if (button) {
+            button.classList.remove("active");
           }
-        } else if (level === "katakana-words") {
+          setIsModeSelected(false);
+          return;
+        }
+      } else if (level === "katakana-words") {
         dispatch(ActionTypes.SET_KATAKANA_WORDS);
       } else if (level === "hiragana-special") {
         dispatch(ActionTypes.SET_HIRAGANA_SPECIAL);
@@ -84,13 +88,17 @@ function ModeSelector({
         dispatch(ActionTypes.SET_KATAKANA_SPECIAL);
       }
 
-      if (button) {
-        button.classList.add("slide-in-bottom-instant");
-        button.classList.add("active")
-        button.addEventListener("click", handleCloseTransition);
-      }
+      setIsModeSelected(true);
     }
   };
+
+  useEffect(() => {
+    if (isModeSelected && button) {
+      button.classList.add("slide-in-bottom-instant");
+      button.classList.add("active");
+      button.addEventListener("click", handleCloseTransition);
+    }
+  }, [isModeSelected]);
 
   const handleClose = () => {
     setGameCharset();
@@ -103,12 +111,12 @@ function ModeSelector({
     if (button) {
       button.classList.add("puff-out-center");
     }
-    if(radioSelectors.length > 0) {
+    if (radioSelectors.length > 0) {
       radioSelectors.forEach((radioSelector) => {
         radioSelector.classList.add("slide-out-elliptic-top-bck");
-      })
+      });
     }
-  }
+  };
 
   return (
     <Modal
@@ -122,9 +130,16 @@ function ModeSelector({
       <fieldset className="mode-selector__fieldset">
         {modes.map((mode) => (
           <>
+            <input
+              type="radio"
+              name="mode"
+              id={mode.id}
+              className={`${mode.isLocked ? "mode-selector__radio-input--locked" : "mode-selector__radio-input"}`}
+              onChange={levelRadioHandler}
+            />
             <label
               htmlFor={mode.id}
-              className={`mode-selector__label ${mode.isLocked ? "lock" : ""}`}
+              className={` ${mode.isLocked ? "mode-selector__label--locked" : "mode-selector__label"}`}
             >
               <p>{mode.name}</p>
               <div className="mode-selector__label-icon">
@@ -139,13 +154,6 @@ function ModeSelector({
                 </svg>
               </div>
             </label>
-            <input
-              type="radio"
-              name="mode"
-              id={mode.id}
-              className="mode-selector__radio-input"
-              onChange={levelRadioHandler}
-            />
           </>
         ))}
       </fieldset>
