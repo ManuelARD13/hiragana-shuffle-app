@@ -1,10 +1,11 @@
 @use "../abstracts/variables" as *;
 
 .keyboard {
-  grid-row: 9 / span 4;
+  grid-row: 10 / span 3;
   margin-inline: auto;
   margin-block: auto;
   max-width: 100%;
+  animation: slide-in-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
   &__row {
     display: flex;
     justify-content: center;
@@ -19,7 +20,7 @@
     font-family: $font-zen-maru-gothic;
     font-size: 1.4rem;
     background: rgba(255, 85, 114, 0.6);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    box-shadow: 6px 8px 5px rgba(0, 0, 0, 0.35);
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(4px);
     border-radius: 10px;
@@ -35,6 +36,6 @@
     width: 3em;
     font-family: $font-mochiy-pop-p-one;
     position: relative;
-    box-shadow: none;
+    box-shadow: 6px 8px 5px rgba(0, 0, 0, 0.35);
   }
 }

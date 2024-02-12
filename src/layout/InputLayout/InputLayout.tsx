@@ -55,13 +55,14 @@ function InputLayout({
 
   return (
     <>
+      <h2 className="input__title">How is it read?</h2>
+      <Scores score={score} level={1} isGameRunning={isGameRunning} />
       <InputDisplay
         input={input}
         message={message}
         setInput={setInput}
         handleSubmit={handleSubmit}
       />
-      <Scores score={score} level={1} isGameRunning={isGameRunning} />
       <Keyboard input={input} setInput={setInput}  handleSubmit={handleSubmit} />
     </>
   );

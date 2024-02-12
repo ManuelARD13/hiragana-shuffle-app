@@ -55,6 +55,9 @@ function ModeSelector({
   const [isModeSelected, setIsModeSelected] = useState<boolean>(false);
 
   const button = document.querySelector(".mode-selector__btn");
+  const btnBackground = document.querySelector(
+    ".modal__btn-container"
+  );
 
   const levelRadioHandler = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -77,6 +80,9 @@ function ModeSelector({
           if (button) {
             button.classList.remove("active");
           }
+          if(btnBackground){
+            btnBackground.classList.remove("btn-background");
+          }
           setIsModeSelected(false);
           return;
         }
@@ -93,7 +99,11 @@ function ModeSelector({
   };
 
   useEffect(() => {
-    if (isModeSelected && button) {
+    
+    if (isModeSelected && btnBackground && button) {
+
+      btnBackground.classList.add("btn-background");
+      
       button.classList.add("slide-in-bottom-instant");
       button.classList.add("active");
       button.addEventListener("click", handleCloseTransition);
@@ -107,7 +117,9 @@ function ModeSelector({
   };
 
   const handleCloseTransition = () => {
-    const radioSelectors = document.querySelectorAll(".mode-selector__label");
+    const radioSelectors = Array.from(document.getElementsByTagName(
+      "label"
+    ));
     if (button) {
       button.classList.add("puff-out-center");
     }
@@ -139,7 +151,7 @@ function ModeSelector({
             />
             <label
               htmlFor={mode.id}
-              className={` ${mode.isLocked ? "mode-selector__label--locked" : "mode-selector__label"}`}
+              className={`slide-in-right mode-selector__label ${mode.isLocked ? "locked" : ""}`}
             >
               <p>{mode.name}</p>
               <div className="mode-selector__label-icon">

@@ -17,13 +17,7 @@ function Modal({
   children,
   buttonCallback,
   buttonText,
-  buttonClassName,
-  className,
-  modalBackground,
-  secondaryButton = false,
-  secondaryButtonCallback = () => {},
-  secondaryButtonText = "",
-  secondaryButtonClassName = ""
+  ...props
 }: PropsWithChildren<ModalProps>) {
   const [isActive, setIsActive] = useState(true);
   const modalRoot = document.getElementById("modal")!;
@@ -33,8 +27,8 @@ function Modal({
   let bkImg = "";
   let modalStyles = {};
 
-  if (modalBackground) {
-    bkImg = require(`../../img/${modalBackground}`).default;
+  if (props.modalBackground) {
+    bkImg = require(`../../img/${props.modalBackground}`).default;
     modalStyles = {
       backgroundImage: `url(${bkImg})`,
     };
@@ -58,30 +52,32 @@ function Modal({
     setTimeout(() => {
       modal.current?.classList.toggle("modal-hidden");
       setIsActive(false);
-      secondaryButtonCallback();
+      if (props.secondaryButtonCallback) {
+        props.secondaryButtonCallback();
+      }
     }, 1500);
-  }
+  };
   return (
     <>
       {isActive
         ? createPortal(
             <div
-              className={`modal ${className ? className : ""}`}
+              className={`modal ${props.className ? props.className : ""}`}
               style={modalStyles}
               ref={modal}
             >
               <div className="modal__overlay"></div>
               {children}
               <div className="modal__btn-container">
-                <button onClick={handleClose} className={buttonClassName}>
+                <button onClick={handleClose} className={props.buttonClassName}>
                   {buttonText}
                 </button>
-                {secondaryButton ? (
+                {props.secondaryButton ? (
                   <button
                     onClick={secondaryHandleClose}
-                    className={secondaryButtonClassName}
+                    className={props.secondaryButtonClassName}
                   >
-                    {secondaryButtonText}
+                    {props.secondaryButtonText}
                   </button>
                 ) : null}
               </div>

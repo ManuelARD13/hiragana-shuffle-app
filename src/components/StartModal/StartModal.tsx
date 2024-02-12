@@ -20,7 +20,7 @@ function StartModal({ setScreen }: StartModalProps) {
       }, 2000)
       logo.classList.add("jello-diagonal-2");
     }
-  },5000)
+  },4000)
 
   const handleCloseTransition = () => {
     const logo = document.querySelector(".start-modal__logo");

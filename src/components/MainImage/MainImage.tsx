@@ -6,7 +6,7 @@ function MainImage({ char }: {
 }) {
 
   return (
-    <div className='main-image'>
+    <div className='main-image flip-in-ver-right' style={{backgroundImage: `url(${require(`../../img/papper-pattern.png`).default})`}}>
       <p>
         {char}
       </p>
