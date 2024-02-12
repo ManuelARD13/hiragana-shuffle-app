@@ -18,7 +18,7 @@ function AppUI() {
     romaji: "",
   });
 
-  const [screen, setScreen] = useState<Screen>(Screen.permissions);
+  const [screen, setScreen] = useState<Screen>(Screen.modeSelector);
   const [isAudioAllowed, setIsAudioAllowed] = useState<boolean>(true);
 
   //Charsets

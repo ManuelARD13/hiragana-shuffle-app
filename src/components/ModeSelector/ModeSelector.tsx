@@ -141,7 +141,7 @@ function ModeSelector({
       <h1>Which set are we gonna practice today?</h1>
       <fieldset className="mode-selector__fieldset">
         {modes.map((mode) => (
-          <>
+          <div key={mode.id} className="mode-selector__container">
             <input
               type="radio"
               name="mode"
@@ -151,7 +151,7 @@ function ModeSelector({
             />
             <label
               htmlFor={mode.id}
-              className={`slide-in-right mode-selector__label ${mode.isLocked ? "locked" : ""}`}
+              className={`mode-selector__label ${mode.isLocked ? "locked" : ""}`}
             >
               <p>{mode.name}</p>
               <div className="mode-selector__label-icon">
@@ -166,7 +166,7 @@ function ModeSelector({
                 </svg>
               </div>
             </label>
-          </>
+          </div>
         ))}
       </fieldset>
     </Modal>
