@@ -2,6 +2,7 @@
 
 .keyboard {
   grid-row: 10 / span 3;
+  align-self: self-start;
   margin-inline: auto;
   margin-block: auto;
   max-width: 100%;
