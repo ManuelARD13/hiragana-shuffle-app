@@ -11,6 +11,7 @@ type ModalProps = {
   secondaryButtonClassName?: string;
   className?: string;
   modalBackground?: string;
+  setIsLoading?: (value: boolean) => void;
 };
 
 function Modal({
@@ -24,13 +25,16 @@ function Modal({
   const modal = useRef<HTMLDivElement>(null);
   modal.current?.classList.remove("modal-hidden");
 
-  let bkImg = "";
   let modalStyles = {};
 
   if (props.modalBackground) {
-    bkImg = require(`../../img/${props.modalBackground}`).default;
+    const image = new Image()
+    image.onload = () => {
+      if(props.setIsLoading){props.setIsLoading(false)}
+    }
+    image.src = require(`../../img/${props.modalBackground}`).default;
     modalStyles = {
-      backgroundImage: `url(${bkImg})`,
+      backgroundImage: `url(${image.src})`,
     };
   }
 

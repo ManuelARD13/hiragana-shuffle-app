@@ -8,7 +8,8 @@ interface SoundPlayerProps {
 }
 
 function SoundPlayer({ isAudioAllowed, screen }: SoundPlayerProps) {
-  const mainTheme = require("../../music/Main-Theme.mp3").default;
+  const main = require("../../music/Main-Theme.mp3").default;
+  const mainTrack = new Audio(main);
 
   const challenge = useRef<HTMLAudioElement>(null);
 
@@ -22,7 +23,7 @@ function SoundPlayer({ isAudioAllowed, screen }: SoundPlayerProps) {
   return (
     <>
       {screen === Screen.intro || screen === Screen.modeSelector ? (
-        <audio src={mainTheme} autoPlay muted={!isAudioAllowed} loop />
+        <audio src={mainTrack.src} autoPlay muted={!isAudioAllowed} loop />
       ) : null}
       {screen === Screen.start ? (
         <audio

@@ -1,0 +1,43 @@
+@use "../abstracts/variables" as *;
+
+.loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100svh;
+  background-color: #ff294d;
+  &__footer {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 0.5em;
+    align-items: baseline;
+    justify-content: flex-start;
+    padding: 0 1em 1em 0;
+    &-icon {
+      width: 40%;
+      height: auto;
+    }
+    &-dots {
+      display: flex;
+      gap: 10px;
+      .dot {
+        background: whitesmoke;
+        width: 12px;
+        height: 12px;
+        clip-path: circle();
+        padding-bottom: 1.5em;
+        transition: all 0.5s ease-in-out;
+      }
+    }
+  }
+}
+
+@for $i from 1 through 3 {
+  .dot:nth-child(#{$i}) {
+    animation-delay: 0.2s + $i * 0.4s;
+  }
+}

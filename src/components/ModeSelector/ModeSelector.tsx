@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import type { Dispatch } from "react";
 import { Screen } from "../../models/charsets.model";
 
@@ -58,7 +58,6 @@ function ModeSelector({
   const btnBackground = document.querySelector(
     ".modal__btn-container"
   );
-
   const levelRadioHandler = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {

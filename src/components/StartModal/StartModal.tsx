@@ -6,11 +6,11 @@ import { Screen } from "../../models/charsets.model";
 
 type StartModalProps = {
   setScreen: Dispatch<Screen>;
-  isAudioAllowed: boolean;
+  setIsLoading: (value: boolean) => void
 };
 
-function StartModal({ setScreen }: StartModalProps) {
-
+function StartModal({ setScreen, setIsLoading  }: StartModalProps) {
+  
   setInterval(() => {
     const logo = document.querySelector(".start-modal__logo");
     if (logo) {
@@ -35,6 +35,7 @@ function StartModal({ setScreen }: StartModalProps) {
 
 
  useEffect(() => {
+  setIsLoading(true)
    const button = document.querySelector(".start-modal__btn");
    if (button) {
      button.addEventListener("click", handleCloseTransition);
@@ -47,6 +48,7 @@ function StartModal({ setScreen }: StartModalProps) {
       buttonClassName={"start-modal__btn slide-in-bottom"}
       buttonText={"START"}
       modalBackground={"day-jp-bk.jpg"}
+      setIsLoading={setIsLoading}
     >
       <div className="start-modal__gif">
         <img src={require("../../img/wei-mao-fan-img-4052.gif").default} alt="sakura" />

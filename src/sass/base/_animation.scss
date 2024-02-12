@@ -43,6 +43,11 @@
 	        animation: flip-in-ver-right 0.75s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
+.scale-up-center {
+	-webkit-animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	        animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
 /* Custom Animations */
 
 @-webkit-keyframes fade-in {
@@ -102,6 +107,7 @@
 
 /**
  * ----------------------------------------
+ * animation scale-up-center
  * animation flip-in-ver-right
  * animation slide-in-left
  * animation slide-in-right
@@ -112,6 +118,28 @@
  * animation puff-out-center
  * ----------------------------------------
  */
+
+@-webkit-keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
 
 @-webkit-keyframes flip-in-ver-right {
   0% {

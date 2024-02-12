@@ -11,6 +11,7 @@ import GameOverModal from "../../components/GameOverModal/GameOverModal";
 import InputLayout from "../InputLayout/InputLayout";
 import ModeSelector from "../../components/ModeSelector/ModeSelector";
 import SoundPlayer from "../../common/SoundPlayer/SoundPlayer";
+import Loader from "../../common/Loader/Loader";
 
 function AppUI() {
   const [char, setChar] = useState<JPChar>({
@@ -18,7 +19,7 @@ function AppUI() {
     romaji: "",
   });
 
-  const [screen, setScreen] = useState<Screen>(Screen.modeSelector);
+  const [screen, setScreen] = useState<Screen>(Screen.permissions);
   const [isAudioAllowed, setIsAudioAllowed] = useState<boolean>(true);
 
   //Charsets
@@ -109,18 +110,39 @@ function AppUI() {
   }, [gameCharset])
 
   useEffect(() => {
-    const backgroundImages = [
+    if(screen === Screen.start){
+      setIsLoading(true)
+      const backgroundImages = [
       require("../../img/temple-day-bk.jpg").default,
       require("../../img/night-jp-bk.jpg").default,
       require("../../img/school-day-bk.jpg").default,
       require("../../img/street-day-bk.jpg").default,
     ];
     const randomIndex = Math.floor(Math.random() * backgroundImages.length);
-    setBackgroundImage(backgroundImages[randomIndex]);
-  }, []);
+    const image = new Image();
+    image.onload = () => {
+      setIsLoading(false)
+    }
+    image.src = backgroundImages[randomIndex];
+    setBackgroundImage(image.src);}
+  }, [screen]);
+
+  // if (backgroundImage === "") {
+  //   const image = new Image()
+  //   image.onload = () => {
+  //     setIsLoading(false)
+  //   }
+  //   image.src = require(`../../img/${props.modalBackground}`).default;
+  //   modalStyles = {
+  //     backgroundImage: `url(${image.src})`,
+  //   };
+  // }
+
+  const [ isLoading, setIsLoading ] = useState<boolean>(false);
 
   return (
     <>
+    { isLoading && <Loader />}
       <SoundPlayer screen={screen} isAudioAllowed={isAudioAllowed} />
       {screen === Screen.permissions ? (
         <PermissionsModal
@@ -129,7 +151,7 @@ function AppUI() {
         />
       ) : null}
       {screen === Screen.intro ? (
-        <StartModal setScreen={setScreen} isAudioAllowed={isAudioAllowed} />
+        <StartModal setScreen={setScreen} setIsLoading={setIsLoading} />
       ) : null}
       {screen === Screen.modeSelector ? (
         <ModeSelector
