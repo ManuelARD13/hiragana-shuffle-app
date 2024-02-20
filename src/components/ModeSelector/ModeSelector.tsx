@@ -1,53 +1,71 @@
 import React, { useEffect, useRef, useState } from "react";
 import type { Dispatch } from "react";
-import { Screen } from "../../models/charsets.model";
+import { Charset, Screen } from "../../models/charsets.model";
 
 import Modal from "../../common/Modal/Modal";
 
 import { ActionTypes } from "../../models/charsets.model";
+import { useAppContext } from "../../context/AppContext";
 
 interface ModeSelectorProps {
-  dispatch: Dispatch<ActionTypes>;
   buttonCallback: (value: Screen) => void;
   setIsGameRunning: (value: boolean) => void;
   setGameCharset: () => void;
 }
 
+type Mode = {
+  name: string;
+  id: keyof typeof Charset;
+  isLocked: boolean;
+};
+
 function ModeSelector({
-  dispatch,
   buttonCallback,
   setIsGameRunning,
   setGameCharset,
 }: ModeSelectorProps) {
-  const modes = [
+
+  const { setCharsetName } = useAppContext();
+
+  const modes: Mode[] = [
     {
       name: "Hiragana",
-      id: "hiragana",
+      id: "HIRAGANA",
       isLocked: false,
     },
     {
-      name: "Katakana",
-      id: "katakana",
+      name: "Hiragana (ten-tens & maru)",
+      id: "HIRAGANA_TENTEN_MARU",
+      isLocked: false,
+    },
+    // {
+    //   name: "Katakana",
+    //   id: "KATAKANA",
+    //   isLocked: false,
+    // },
+    {
+      name: "Hiragana (Full Set!)",
+      id: "HIRAGANA_FULLSET",
       isLocked: false,
     },
     {
-      name: "Hiragana (Ten-Ten & Maru)",
-      id: "hiragana-2",
+      name: "Hiragana (Youon)",
+      id: "HIRAGANA_YOUON",
       isLocked: false,
     },
-    {
-      name: "Katakana (Ten-Ten & Maru)",
-      id: "katakana-2",
-      isLocked: false,
-    },
-    {
-      name: "Full Set!",
-      id: "hiragana-and-katakana",
-      isLocked: false,
-    },
+    // {
+    //   name: "Katakana (Ten-Ten & Maru)",
+    //   id: "katakana-2",
+    //   isLocked: false,
+    // },
+    // {
+    //   name: "Full Set!",
+    //   id: "hiragana-and-katakana",
+    //   isLocked: false,
+    // },
     {
       name: "Japanese Words",
-      id: "hiragana-words",
+      id: "HIRAGANA_WORDS",
       isLocked: true,
     },
   ];
@@ -55,54 +73,39 @@ function ModeSelector({
   const [isModeSelected, setIsModeSelected] = useState<boolean>(false);
 
   const button = document.querySelector(".mode-selector__btn");
-  const btnBackground = document.querySelector(
-    ".modal__btn-container"
-  );
+  const btnBackground = document.querySelector(".modal__btn-container");
+
   const levelRadioHandler = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     if (event.target.checked) {
-      const level = event.target.id;
-      if (level === "hiragana") {
-        dispatch(ActionTypes.SET_HIRAGANA);
-      } else if (level === "katakana") {
-        dispatch(ActionTypes.SET_KATAKANA);
-      } else if (level === "hiragana-2") {
-        dispatch(ActionTypes.SET_HIRAGANA_2);
-      } else if (level === "katakana-2") {
-        dispatch(ActionTypes.SET_KATAKANA_2);
-      } else if (level === "hiragana-and-katakana") {
-        dispatch(ActionTypes.SET_HIRAGANA_AND_KATAKANA_FULL);
-      } else if (level === "hiragana-words") {
-        if (modes[5].isLocked) {
-          const button = document.querySelector(".mode-selector__btn");
-          if (button) {
-            button.classList.remove("active");
-          }
-          if(btnBackground){
-            btnBackground.classList.remove("btn-background");
-          }
-          setIsModeSelected(false);
-          return;
+      const radioSelector = document.querySelector(`#${event.target.id}`);
+      if (
+        radioSelector &&
+        !radioSelector.classList.contains(
+          "mode-selector__radio-input--locked"
+        ) &&
+        radioSelector.id in Charset
+      ) {
+        setCharsetName(Charset[event.target.id as keyof typeof Charset]);
+        setIsModeSelected(true);
+      } else {
+        const button = document.querySelector(".mode-selector__btn");
+        if (button) {
+          button.classList.remove("active");
         }
-      } else if (level === "katakana-words") {
-        dispatch(ActionTypes.SET_KATAKANA_WORDS);
-      } else if (level === "hiragana-special") {
-        dispatch(ActionTypes.SET_HIRAGANA_SPECIAL);
-      } else if (level === "katakana-special") {
-        dispatch(ActionTypes.SET_KATAKANA_SPECIAL);
+        if (btnBackground) {
+          btnBackground.classList.remove("btn-background");
+        }
+        setIsModeSelected(false);
       }
-
-      setIsModeSelected(true);
     }
   };
 
   useEffect(() => {
-    
     if (isModeSelected && btnBackground && button) {
-
       btnBackground.classList.add("btn-background");
-      
+
       button.classList.add("slide-in-bottom-instant");
       button.classList.add("active");
       button.addEventListener("click", handleCloseTransition);
@@ -116,9 +119,7 @@ function ModeSelector({
   };
 
   const handleCloseTransition = () => {
-    const radioSelectors = Array.from(document.getElementsByTagName(
-      "label"
-    ));
+    const radioSelectors = Array.from(document.getElementsByTagName("label"));
     if (button) {
       button.classList.add("puff-out-center");
     }
@@ -145,12 +146,18 @@ function ModeSelector({
               type="radio"
               name="mode"
               id={mode.id}
-              className={`${mode.isLocked ? "mode-selector__radio-input--locked" : "mode-selector__radio-input"}`}
+              className={`${
+                mode.isLocked
+                  ? "mode-selector__radio-input--locked"
+                  : "mode-selector__radio-input"
+              }`}
               onChange={levelRadioHandler}
             />
             <label
               htmlFor={mode.id}
-              className={`mode-selector__label ${mode.isLocked ? "locked" : ""}`}
+              className={`mode-selector__label ${
+                mode.isLocked ? "locked" : ""
+              }`}
             >
               <p>{mode.name}</p>
               <div className="mode-selector__label-icon">

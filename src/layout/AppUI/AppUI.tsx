@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useReducer } from "react";
 
-import { JPChar, ActionTypes, Screen } from "../../models/charsets.model";
-
-import charSets from "../../data.json";
+import { JPChar, Screen } from "../../models/charsets.model";
 
 import MainImage from "../../components/MainImage/MainImage";
 import StartModal from "../../components/StartModal/StartModal";
@@ -12,73 +10,25 @@ import InputLayout from "../InputLayout/InputLayout";
 import ModeSelector from "../../components/ModeSelector/ModeSelector";
 import SoundPlayer from "../../common/SoundPlayer/SoundPlayer";
 import Loader from "../../common/Loader/Loader";
+import { useAppContext } from "../../context/AppContext";
 
 function AppUI() {
+  const { charSet } = useAppContext();
+  
   const [char, setChar] = useState<JPChar>({
     character: "",
     romaji: "",
   });
-
+  
   const [screen, setScreen] = useState<Screen>(Screen.permissions);
   const [isAudioAllowed, setIsAudioAllowed] = useState<boolean>(true);
 
-  //Charsets
-  const hiragana: JPChar[] | undefined = charSets.hiragana.base;
-  const katakana: JPChar[] | undefined = charSets.katakana.base;
-  const hiraganaSpecial: JPChar[] | undefined = charSets.hiragana.special;
-  const katakanaSpecial: JPChar[] | undefined = charSets.katakana.special;
-  const hiraganaYou_on: JPChar[] | undefined = charSets.you_on.hiragana;
-  const katakanaYou_on: JPChar[] | undefined = charSets.you_on.katakana;
-  const hiraganaWords: JPChar[] | undefined = charSets.words.hiragana;
-  const katakanaWords: JPChar[] | undefined = charSets.words.katakana;
-
-  const [gameCharset, setGameCharset] = useState<JPChar[] | undefined>(
-    undefined
+  const [gameCharset, setGameCharset] = useState<JPChar[] | null>(
+    null
   );
   const [isGameRunning, setIsGameRunning] = useState<boolean>(false);
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
   const [backgroundImage, setBackgroundImage] = useState<string>("");
-
-  const chartsetReducer = (state: JPChar[], action: ActionTypes) => {
-    switch (action) {
-      default:
-        return hiragana;
-
-      case "SET_KATAKANA":
-        return katakana;
-
-      case "SET_HIRAGANA_AND_KATAKANA":
-        return [...hiragana, ...katakana];
-
-      case "SET_HIRAGANA_2":
-        return [...hiragana, ...hiraganaSpecial];
-
-      case "SET_KATAKANA_2":
-        return [...katakana, ...katakanaSpecial];
-
-      case "SET_HIRAGANA_AND_KATAKANA_FULL":
-        return [
-          ...hiragana,
-          ...katakana,
-          ...hiraganaSpecial,
-          ...katakanaSpecial,
-        ];
-
-      case "SET_HIRAGANA_WORDS":
-        return hiraganaWords;
-
-      case "SET_KATAKANA_WORDS":
-        return katakanaWords;
-
-      case "SET_HIRAGANA_SPECIAL":
-        return hiraganaYou_on;
-
-      case "SET_KATAKANA_SPECIAL":
-        return katakanaYou_on;
-    }
-  };
-
-  const [charSet, dispatch] = useReducer(chartsetReducer, hiragana);
 
   const randomChar = (charset: JPChar[]): void => {
     if (charset.length > 0) {
@@ -127,18 +77,9 @@ function AppUI() {
     setBackgroundImage(image.src);}
   }, [screen]);
 
-  // if (backgroundImage === "") {
-  //   const image = new Image()
-  //   image.onload = () => {
-  //     setIsLoading(false)
-  //   }
-  //   image.src = require(`../../img/${props.modalBackground}`).default;
-  //   modalStyles = {
-  //     backgroundImage: `url(${image.src})`,
-  //   };
-  // }
-
   const [ isLoading, setIsLoading ] = useState<boolean>(false);
+
+  
 
   return (
     <>
@@ -155,10 +96,14 @@ function AppUI() {
       ) : null}
       {screen === Screen.modeSelector ? (
         <ModeSelector
-          dispatch={dispatch}
           buttonCallback={setScreen}
           setIsGameRunning={setIsGameRunning}
-          setGameCharset={() => setGameCharset(charSet)}
+          setGameCharset={() => {
+            console.log(charSet)
+            if(charSet?.length! > 0){
+              setGameCharset(charSet)
+            }
+          }}
         />
       ) : null}
 

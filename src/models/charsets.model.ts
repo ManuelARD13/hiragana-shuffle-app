@@ -17,6 +17,15 @@ export enum ActionTypes {
   SET_KATAKANA_SPECIAL = "SET_KATAKANA_SPECIAL",
 }
 
+export enum Charset {
+  HIRAGANA = "HIRAGANA",
+  HIRAGANA_FULLSET = "HIRAGANA_FULLSET",
+  HIRAGANA_WORDS = "HIRAGANA_WORDS",
+  HIRAGANA_YOUON = "HIRAGANA_YOUON",
+  HIRAGANA_TENTEN_MARU = "HIRAGANA_TENTEN_MARU",
+  // KATAKANA = "KATAKANA",
+}
+
 export enum Screen {
   start = "start",
   modeSelector = "mode_selector",
