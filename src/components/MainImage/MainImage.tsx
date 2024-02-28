@@ -1,7 +1,7 @@
 import React from "react";
+import { useAppContext } from "../../context/AppContext";
 
-function MainImage({ char }: { char: string }) {
-  console.log(char, char.length)
+function MainImage({char}: {char: string}) {
   return (
     <div
       className={`main-image flip-in-ver-right ${char.length > 1 && char.length < 4 ? "you-on--active": ""}`}

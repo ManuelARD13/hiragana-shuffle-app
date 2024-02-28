@@ -1,10 +1,12 @@
 import React, { Dispatch, useEffect, useState } from "react";
-import { JPChar, Charset } from "../models/charsets.model";
-import { useSelectCharset } from "../hooks";
+import { JPChar, Charset, GameCharset } from "../models/charsets.model";
+import { useGameData } from "../hooks";
 
 type Context = {
   charSet: JPChar[] | null;
   setCharsetName: Dispatch<Charset>;
+  isLoading: boolean;
+  gameLogic: GameCharset;
 };
 
 const appCTX = React.createContext({} as Context);
@@ -17,12 +19,12 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [charsetName, setCharsetName] = useState<Charset>(Charset.HIRAGANA);
 
-  const { charSet } = useSelectCharset(charsetName);
+  const { charSet, isLoading, gameLogic } = useGameData(charsetName);
 
-  console.log(charSet)
+
 
   return (
-    <appCTX.Provider value={{ charSet: charSet, setCharsetName }}>
+    <appCTX.Provider value={{ charSet: charSet, setCharsetName, isLoading, gameLogic }}>
       {children}
     </appCTX.Provider>
   );

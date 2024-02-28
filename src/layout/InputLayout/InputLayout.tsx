@@ -1,26 +1,29 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 import InputDisplay from "../../components/InputDisplay/InputDisplay";
 import Scores from "../../components/Scores/Scores";
 import Keyboard from "../../components/Keyboard/Keyboard";
 
 import type { JPChar } from "../../models/charsets.model";
+import { useAppContext } from "../../context/AppContext";
+import MainImage from "../../components/MainImage/MainImage";
 
 interface InputLayoutProps {
-  char: JPChar;
-  updateGameCharset: () => void;
   isGameRunning: boolean;
+  setIsGameRunning: Dispatch<SetStateAction<boolean>>;
+  setIsGameOver: Dispatch<SetStateAction<boolean>>;
 }
 
-function InputLayout({
-  char,
-  updateGameCharset,
-  isGameRunning,
-}: InputLayoutProps) {
-  
+function InputLayout({ isGameRunning, setIsGameRunning, setIsGameOver }: InputLayoutProps) {
+  const { gameLogic } = useAppContext();
+
   const [message, setMessage] = useState<string>("");
   const [input, setInput] = useState<string>("");
   const [score, setScore] = useState<number>(0);
+  const [char, setChar] = useState<JPChar>({
+    character: "",
+    romaji: "",
+  });
 
   const validateAnswer = (input: string): boolean => {
     if (char.romaji === input.toLocaleLowerCase()) {
@@ -42,7 +45,15 @@ function InputLayout({
       setMessage("Correct! 頑張って!");
       setScore(score + 1);
       setInput("");
-      updateGameCharset();
+      gameLogic.updateCharset(char);
+      const newChar = gameLogic.getRandomCharacter();
+      console.log(newChar);
+      if(newChar) {
+        setChar(newChar);
+      }else {
+        setIsGameOver(true);
+        setIsGameRunning(false);
+      }
     } else {
       inputMessage?.classList.remove("success");
       inputMessage?.classList.remove("error");
@@ -53,8 +64,16 @@ function InputLayout({
     }
   };
 
+  useEffect(() => {
+    const newChar = gameLogic.getRandomCharacter();
+    if(newChar) {
+      setChar(newChar);
+    }
+  }, []);
+
   return (
     <>
+      <MainImage char={char.character} />
       <h2 className="input__title">How is it read?</h2>
       <Scores score={score} level={1} isGameRunning={isGameRunning} />
       <InputDisplay
@@ -63,7 +82,7 @@ function InputLayout({
         setInput={setInput}
         handleSubmit={handleSubmit}
       />
-      <Keyboard input={input} setInput={setInput}  handleSubmit={handleSubmit} />
+      <Keyboard input={input} setInput={setInput} handleSubmit={handleSubmit} />
     </>
   );
 }

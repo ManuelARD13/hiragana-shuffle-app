@@ -1,16 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import type { Dispatch } from "react";
 import { Charset, Screen } from "../../models/charsets.model";
 
 import Modal from "../../common/Modal/Modal";
 
-import { ActionTypes } from "../../models/charsets.model";
 import { useAppContext } from "../../context/AppContext";
 
 interface ModeSelectorProps {
   buttonCallback: (value: Screen) => void;
   setIsGameRunning: (value: boolean) => void;
-  setGameCharset: () => void;
 }
 
 type Mode = {
@@ -19,12 +16,7 @@ type Mode = {
   isLocked: boolean;
 };
 
-function ModeSelector({
-  buttonCallback,
-  setIsGameRunning,
-  setGameCharset,
-}: ModeSelectorProps) {
-
+function ModeSelector({ buttonCallback, setIsGameRunning }: ModeSelectorProps) {
   const { setCharsetName } = useAppContext();
 
   const modes: Mode[] = [
@@ -34,15 +26,15 @@ function ModeSelector({
       isLocked: false,
     },
     {
+      name: "Katakana",
+      id: "KATAKANA",
+      isLocked: false,
+    },
+    {
       name: "Hiragana (ten-tens & maru)",
       id: "HIRAGANA_TENTEN_MARU",
       isLocked: false,
     },
-    // {
-    //   name: "Katakana",
-    //   id: "KATAKANA",
-    //   isLocked: false,
-    // },
     {
       name: "Hiragana (Full Set!)",
       id: "HIRAGANA_FULLSET",
@@ -113,7 +105,6 @@ function ModeSelector({
   }, [isModeSelected]);
 
   const handleClose = () => {
-    setGameCharset();
     buttonCallback(Screen.start);
     setIsGameRunning(true);
   };

@@ -1,20 +1,7 @@
 export interface JPChar {
-  character: string,
-  romaji: string
-  score?: number
-}
-
-export enum ActionTypes {
-  SET_HIRAGANA = "SET_HIRAGANA",
-  SET_KATAKANA = "SET_KATAKANA",
-  SET_HIRAGANA_AND_KATAKANA = "SET_HIRAGANA_AND_KATAKANA",
-  SET_HIRAGANA_2 = "SET_HIRAGANA_2",
-  SET_KATAKANA_2 = "SET_KATAKANA_2",
-  SET_HIRAGANA_AND_KATAKANA_FULL = "SET_HIRAGANA_AND_KATAKANA_FULL",
-  SET_HIRAGANA_WORDS = "SET_HIRAGANA_WORDS",
-  SET_KATAKANA_WORDS = "SET_KATAKANA_WORDS",
-  SET_HIRAGANA_SPECIAL = "SET_HIRAGANA_SPECIAL",
-  SET_KATAKANA_SPECIAL = "SET_KATAKANA_SPECIAL",
+  character: string;
+  romaji: string;
+  score?: number;
 }
 
 export enum Charset {
@@ -23,7 +10,7 @@ export enum Charset {
   HIRAGANA_WORDS = "HIRAGANA_WORDS",
   HIRAGANA_YOUON = "HIRAGANA_YOUON",
   HIRAGANA_TENTEN_MARU = "HIRAGANA_TENTEN_MARU",
-  // KATAKANA = "KATAKANA",
+  KATAKANA = "KATAKANA",
 }
 
 export enum Screen {
@@ -32,3 +19,42 @@ export enum Screen {
   intro = "intro",
   permissions = "permissions",
 }
+
+export interface GameLogic {
+  char: JPChar;
+  updateCharset: (char: JPChar) => void;
+  getRandomCharacter: () => JPChar;
+}
+
+export class GameCharset {
+  charset: JPChar[];
+  constructor(charset: JPChar[]) {
+    this.charset = charset;
+  }
+
+  updateCharset(char: JPChar) {
+   
+      let newCharset: JPChar[] = [];
+    if (this.charset.length > 0) {
+      newCharset = this.charset.filter(
+        (character) => char.romaji !== character.romaji
+      );
+      this.charset = newCharset;
+      if (newCharset.length === 0) {
+        return false;
+      }
+    }
+    return true
+  }
+
+  getRandomCharacter(): JPChar | null {
+      if (this.charset.length > 0) {
+        const randomChar = this.charset[Math.floor(Math.random() * this.charset.length)];
+        return randomChar;
+      } else {
+        return null;
+      }
+    }
+}
+
+

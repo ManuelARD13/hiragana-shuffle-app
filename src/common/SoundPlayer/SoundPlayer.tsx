@@ -16,7 +16,6 @@ function SoundPlayer({ isAudioAllowed, screen }: SoundPlayerProps) {
   useEffect(() => {
     if (challenge.current) {
       challenge.current.volume = 0.7;
-      console.log(challenge.current.volume);
     }
   }, [challenge.current]);
 
