@@ -21,7 +21,7 @@ function SoundPlayer({ isAudioAllowed, screen }: SoundPlayerProps) {
 
   return (
     <>
-      {screen === Screen.intro || screen === Screen.modeSelector ? (
+      {screen === Screen.intro || screen === Screen.modeSelector || screen === Screen.charsetSelector ? (
         <audio src={mainTrack.src} autoPlay muted={!isAudioAllowed} loop />
       ) : null}
       {screen === Screen.start ? (

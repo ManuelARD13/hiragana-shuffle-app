@@ -8,9 +8,11 @@ import StartModal from "../../components/StartModal/StartModal";
 import PermissionsModal from "../../components/PermissionsModal/PermissionsModal";
 import GameOverModal from "../../components/GameOverModal/GameOverModal";
 import InputLayout from "../InputLayout/InputLayout";
-import ModeSelector from "../../components/ModeSelector/ModeSelector";
+import ModeSelector from "../../components/CharsetSelector/CharsetSelector";
 import SoundPlayer from "../../common/SoundPlayer/SoundPlayer";
 import Loader from "../../common/Loader/Loader";
+import GameModes from "../../components/GameModes/GameModes";
+import CharsetSelector from "../../components/CharsetSelector/CharsetSelector";
 
 
 function AppUI() {
@@ -56,8 +58,8 @@ function AppUI() {
       {screen === Screen.intro ? (
         <StartModal setScreen={setScreen} setIsLoading={setIsLoading} />
       ) : null}
-      {screen === Screen.modeSelector ? (
-        <ModeSelector
+     {screen === Screen.charsetSelector ? (
+        <CharsetSelector
           buttonCallback={setScreen}
           setIsGameRunning={setIsGameRunning}
         />
@@ -94,6 +96,9 @@ function AppUI() {
         //TODO: Finish GameOverModal design and return to main menu functionality
       }
       {isGameOver ? <GameOverModal /> : null}
+      {
+        screen === Screen.modeSelector ? <GameModes setScreen={setScreen} /> : null
+      }
     </>
   );
 }

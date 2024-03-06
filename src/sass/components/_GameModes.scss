@@ -1,0 +1,77 @@
+@use "../abstracts/variables" as *;
+
+.game-mode__modal {
+  position: relative;
+  height: 100vh;
+
+}
+
+.game-mode__btn-container {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3em;
+  z-index: 3;
+}
+
+.game-mode {
+  position: relative;
+  width: 100%;
+  min-height: 34.7vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: -8.5vh;
+  color: $text-color-light;
+  cursor: pointer;
+  clip-path: polygon(0 25%, 100% 0%, 100% 75%, 0% 100%);
+  p {
+    margin: 0;
+    font-size: 1.75rem;
+    transform: rotate(-10deg);
+  }
+  &:hover,
+  &:focus {
+    z-index: 2;
+    transform: scale(1.3);
+    transition: all 0.25s ease;
+  }
+}
+
+.first-item {
+  margin-top: 0;
+  margin-bottom: -1.7vh;
+  clip-path: polygon(0 15%, 100% 15%, 100% 70%, 0 95%);
+}
+
+.last-item {
+  margin-top: -10.2vh;
+  clip-path: polygon(0 30%, 100% 5%, 100% 85%, 0 85%);
+}
+
+.color-1 {
+  background-color: #8bcae7;
+}
+
+.color-3 {
+  background-color: #f5452a;
+}
+
+.color-4 {
+  background-color: #f4df8d;
+}
+
+.color-2 {
+  background-color: #1c9393;
+}
+
+.game-mode__radio-input {
+  display: none;
+}
+
+.active {
+  display: flex;
+}

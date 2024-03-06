@@ -5,7 +5,7 @@ import Modal from "../../common/Modal/Modal";
 
 import { useAppContext } from "../../context/AppContext";
 
-interface ModeSelectorProps {
+interface CharsetSelectorProps {
   buttonCallback: (value: Screen) => void;
   setIsGameRunning: (value: boolean) => void;
 }
@@ -16,7 +16,7 @@ type Mode = {
   isLocked: boolean;
 };
 
-function ModeSelector({ buttonCallback, setIsGameRunning }: ModeSelectorProps) {
+function CharsetSelector({ buttonCallback, setIsGameRunning }: CharsetSelectorProps) {
   const { setCharsetName } = useAppContext();
 
   const modes: Mode[] = [
@@ -170,4 +170,4 @@ function ModeSelector({ buttonCallback, setIsGameRunning }: ModeSelectorProps) {
   );
 }
 
-export default ModeSelector;
+export default CharsetSelector;

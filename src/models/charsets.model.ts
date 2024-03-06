@@ -15,6 +15,7 @@ export enum Charset {
 
 export enum Screen {
   start = "start",
+  charsetSelector = "charset_selector",
   modeSelector = "mode_selector",
   intro = "intro",
   permissions = "permissions",
@@ -57,4 +58,17 @@ export class GameCharset {
     }
 }
 
+export type GameModeT = {
+  name: string
+  JPName: string
+  value: GameMode
+  isLocked: boolean
+}
+
+export enum GameMode {
+  study = "study",
+  practice = "practice",
+  timeTrial = "time-trial",
+  survival = "survival"
+}
 
