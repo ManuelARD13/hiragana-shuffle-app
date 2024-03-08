@@ -11,11 +11,12 @@ function Loader() {
       },500)
     })
   }, 3000)
+
   return (
     <div className='loader'>
       <div className='loader__footer'>
         <div className='loader__footer-icon'>
-          <img src={require("../../img/hiragana-shuffle-logo-removebg-preview.png").default} alt="hiragana-shuffle-logo" />
+          <img src={require("img/hiragana-shuffle-logo-removebg-preview.png").default} alt="hiragana-shuffle-logo" />
         </div>
         <div className="loader__footer-dots">
           <div className="dot scale-up-center"></div>

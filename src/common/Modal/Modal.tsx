@@ -32,7 +32,7 @@ function Modal({
     image.onload = () => {
       if(props.setIsLoading){props.setIsLoading(false)}
     }
-    image.src = require(`../../img/${props.modalBackground}`).default;
+    image.src = require(`img/${props.modalBackground}`).default;
     modalStyles = {
       backgroundImage: `url(${image.src})`,
     };

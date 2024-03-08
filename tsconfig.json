@@ -1,5 +1,41 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@common/*": [
+        "./common/*"
+      ],
+      "@components/*": [
+        "./components/*"
+      ],
+      "@context/*": [
+        "./context/*"
+      ],
+      "@hooks/*": [
+        "./hooks/*"
+      ],
+      "@img/*": [
+        "./img/*"
+      ],
+      "@layout/*": [
+        "./layout/*"
+      ],
+      "@models/*": [
+        "./models/*"
+      ],
+      "@music/*": [
+        "./music/*"
+      ],
+      "@sass/*": [
+        "./sass/*"
+      ],
+      "@services/*": [
+        "./services/*"
+      ],
+    },
     "outDir": "build/dist",
     "module": "commonjs",
     "target": "es5",

@@ -12,12 +12,24 @@ module.exports = {
   mode: "development",
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
+    alias: {
+      common: path.resolve(__dirname, "./src/common/"),
+      components: path.resolve(__dirname, "./src/components/"),
+      context: path.resolve(__dirname, "./src/context/"),
+      hooks: path.resolve(__dirname, "./src/hooks/"),
+      img: path.resolve(__dirname, "./src/img/"),
+      layout: path.resolve(__dirname, "./src/layout/"),
+      models: path.resolve(__dirname, "./src/models/"),
+      music: path.resolve(__dirname, "./src/music/"),
+      sass: path.resolve(__dirname, "./src/sass/"),
+      services: path.resolve(__dirname, "./src/services/"),
+    },
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: "ts-loader",
         exclude: /node_modules/,
       },
       {
@@ -41,7 +53,7 @@ module.exports = {
         test: /\.(png|jpe?g|gif|mp3)$/i,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
           },
         ],
       },
@@ -55,7 +67,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "[name].css",
     }),
-    new dotenv({path: "./.env.local"}),
+    new dotenv({ path: "./.env.local" }),
   ],
   devServer: {
     static: path.join(__dirname, "dist"),

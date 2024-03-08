@@ -70,7 +70,7 @@ function GameModeSelector() {
       buttonCallback={() =>
         gameDispatch({
           type: GameAction.SET_SCREEN,
-          payload: Screen.charsetSelector,
+          payload: Screen.mayorCharsetSelector,
         })
       }
     >

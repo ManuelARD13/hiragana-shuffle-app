@@ -14,6 +14,18 @@ module.exports = {
   mode: "production",
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
+    alias: {
+      common: path.resolve(__dirname, "./src/common/"),
+      components: path.resolve(__dirname, "./src/components/"),
+      Context: path.resolve(__dirname, "./src/context/"),
+      hooks: path.resolve(__dirname, "./src/hooks/"),
+      img: path.resolve(__dirname, "./src/img/"),
+      layout: path.resolve(__dirname, "./src/layout/"),
+      Models: path.resolve(__dirname, "./src/models/"),
+      music: path.resolve(__dirname, "./src/music/"),
+      sass: path.resolve(__dirname, "./src/sass/"),
+      services: path.resolve(__dirname, "./src/services/"),
+    },
   },
   module: {
     rules: [

@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { useAppContext } from "context/AppContext";
 
 interface ScoresProps {
   score: number;
   level: number;
-  isGameRunning: boolean;
 }
 
-function Scores({ score, level, isGameRunning }: ScoresProps) {
+function Scores({ score, level }: ScoresProps) {
+
+  const { gameState } = useAppContext();
+
   const [time, setTime] = useState(0);
   const [timer, setTimer] = useState("00:00");
 
   useEffect(() => {
-    if (!isGameRunning) {
+    if (!gameState.isGameRunning) {
       setTime(0);
     }
     const timeout = setTimeout(() => {

@@ -1,21 +1,18 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+//React
+import React, { useEffect, useState } from "react";
+//Hooks
+import { useAppContext } from "context/AppContext";
+//Types
+import { GameAction, type JPChar } from "models/charsets.model";
+//Components
+import MainImage from "components/MainImage/MainImage";
+import InputDisplay from "components/InputDisplay/InputDisplay";
+import Scores from "components/Scores/Scores";
+import Keyboard from "components/Keyboard/Keyboard";
 
-import InputDisplay from "../../components/InputDisplay/InputDisplay";
-import Scores from "../../components/Scores/Scores";
-import Keyboard from "../../components/Keyboard/Keyboard";
 
-import type { JPChar } from "../../models/charsets.model";
-import { useAppContext } from "../../context/AppContext";
-import MainImage from "../../components/MainImage/MainImage";
-
-interface InputLayoutProps {
-  isGameRunning: boolean;
-  setIsGameRunning: Dispatch<SetStateAction<boolean>>;
-  setIsGameOver: Dispatch<SetStateAction<boolean>>;
-}
-
-function InputLayout({ isGameRunning, setIsGameRunning, setIsGameOver }: InputLayoutProps) {
-  const { gameLogic } = useAppContext();
+function InputLayout() {
+  const { gameLogic, gameDispatch } = useAppContext();
 
   const [message, setMessage] = useState<string>("");
   const [input, setInput] = useState<string>("");
@@ -51,8 +48,8 @@ function InputLayout({ isGameRunning, setIsGameRunning, setIsGameOver }: InputLa
       if(newChar) {
         setChar(newChar);
       }else {
-        setIsGameOver(true);
-        setIsGameRunning(false);
+        gameDispatch({ type: GameAction.SET_IS_GAME_OVER, payload: true });
+        gameDispatch({ type: GameAction.SET_IS_GAME_RUNNING, payload: false });
       }
     } else {
       inputMessage?.classList.remove("success");
@@ -75,7 +72,7 @@ function InputLayout({ isGameRunning, setIsGameRunning, setIsGameOver }: InputLa
     <>
       <MainImage char={char.character} />
       <h2 className="input__title">How is it read?</h2>
-      <Scores score={score} level={1} isGameRunning={isGameRunning} />
+      <Scores score={score} level={1} />
       <InputDisplay
         input={input}
         message={message}

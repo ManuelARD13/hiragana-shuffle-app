@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Modal from '../../common/Modal/Modal';
+import Modal from 'common/Modal/Modal';
 
 function GameOverModal() {
   const handleClose = () => {

@@ -1,72 +1,57 @@
+//React
 import React, { useState, useEffect } from "react";
-
-// Enums
-import { Screen } from "../../models/charsets.model";
-
+//Hooks
+import { useAppContext } from "context/AppContext";
+// Types
+import { Screen, GameAction } from "models/charsets.model";
 // Components
-import StartModal from "../../components/StartModal/StartModal";
-import PermissionsModal from "../../components/PermissionsModal/PermissionsModal";
-import GameOverModal from "../../components/GameOverModal/GameOverModal";
-import InputLayout from "../InputLayout/InputLayout";
-import ModeSelector from "../../components/CharsetSelector/CharsetSelector";
-import SoundPlayer from "../../common/SoundPlayer/SoundPlayer";
-import Loader from "../../common/Loader/Loader";
-import GameModes from "../../components/GameModes/GameModes";
-import CharsetSelector from "../../components/CharsetSelector/CharsetSelector";
-
+import StartModal from "components/StartModal/StartModal";
+import PermissionsModal from "components/PermissionsModal/PermissionsModal";
+import GameOverModal from "components/GameOverModal/GameOverModal";
+import InputLayout from "layout/InputLayout/InputLayout";
+import SoundPlayer from "common/SoundPlayer/SoundPlayer";
+import Loader from "common/Loader/Loader";
+import GameModeSelector from "components/GameModeSelector/GameModesSelector";
+import CharsetSelector from "components/CharsetSelector/CharsetSelector";
+import MayorCharsetSelector from "components/MayorCharsetSelector/MayorCharsetSelector";
 
 function AppUI() {
-  //TODO: group all the game states in one reducer
-  const [screen, setScreen] = useState<Screen>(Screen.permissions);
-  const [isAudioAllowed, setIsAudioAllowed] = useState<boolean>(true);
-  const [ isLoading, setIsLoading ] = useState<boolean>(false);
-
-  const [isGameRunning, setIsGameRunning] = useState<boolean>(false);
-  const [isGameOver, setIsGameOver] = useState<boolean>(false);
-
+  const { gameState, gameDispatch } = useAppContext();
 
   const [backgroundImage, setBackgroundImage] = useState<string>("");
 
   useEffect(() => {
-    if(screen === Screen.start){
-      setIsLoading(true)
+    if (gameState.screen === Screen.start) {
+      gameDispatch({ type: GameAction.SET_IS_GAME_LOADING, payload: true });
       const backgroundImages = [
-      require("../../img/temple-day-bk.jpg").default,
-      require("../../img/night-jp-bk.jpg").default,
-      require("../../img/school-day-bk.jpg").default,
-      require("../../img/street-day-bk.jpg").default,
-    ];
-    const randomIndex = Math.floor(Math.random() * backgroundImages.length);
-    const image = new Image();
-    image.onload = () => {
-      setIsLoading(false)
+        require("img/temple-day-bk.jpg").default,
+        require("img/night-jp-bk.jpg").default,
+        require("img/school-day-bk.jpg").default,
+        require("img/street-day-bk.jpg").default,
+      ];
+      const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+      const image = new Image();
+      image.onload = () => {
+        gameDispatch({ type: GameAction.SET_IS_GAME_LOADING, payload: false });
+      };
+      image.src = backgroundImages[randomIndex];
+      setBackgroundImage(image.src);
     }
-    image.src = backgroundImages[randomIndex];
-    setBackgroundImage(image.src);}
-  }, [screen]);
+  }, [gameState.screen]);
 
   return (
     <>
-    { isLoading && <Loader />}
-      <SoundPlayer screen={screen} isAudioAllowed={isAudioAllowed} />
-      {screen === Screen.permissions ? (
-        <PermissionsModal
-          buttonCallback={() => setScreen(Screen.intro)}
-          setAudioAllowed={setIsAudioAllowed}
-        />
+      <SoundPlayer />
+      {gameState.isGameLoading && <Loader />}
+      {gameState.screen === Screen.permissions ? (
+        <PermissionsModal />
       ) : null}
-      {screen === Screen.intro ? (
-        <StartModal setScreen={setScreen} setIsLoading={setIsLoading} />
-      ) : null}
-     {screen === Screen.charsetSelector ? (
-        <CharsetSelector
-          buttonCallback={setScreen}
-          setIsGameRunning={setIsGameRunning}
-        />
-      ) : null}
+      {gameState.screen === Screen.intro ? <StartModal /> : null}
+      {gameState.screen === Screen.modeSelector ? <GameModeSelector /> : null}
+      {gameState.screen === Screen.mayorCharsetSelector ? <MayorCharsetSelector /> : null}
+      {gameState.screen === Screen.charsetSelector ? <CharsetSelector /> : null}
 
-      {isGameRunning ? (
-       
+      {gameState.isGameRunning ? (
         <main
           className="main"
           style={{ backgroundImage: `url(${backgroundImage})` }}
@@ -83,22 +68,14 @@ function AppUI() {
               <h1>Game Mode Title</h1>
             </div>
           </div>
-          
-          <InputLayout
-            setIsGameRunning={setIsGameRunning}
-            setIsGameOver={setIsGameOver}
-            isGameRunning={isGameRunning}
-          >
-          </InputLayout>
+
+          <InputLayout />
         </main>
       ) : null}
       {
         //TODO: Finish GameOverModal design and return to main menu functionality
       }
-      {isGameOver ? <GameOverModal /> : null}
-      {
-        screen === Screen.modeSelector ? <GameModes setScreen={setScreen} /> : null
-      }
+      {gameState.isGameOver ? <GameOverModal /> : null}
     </>
   );
 }

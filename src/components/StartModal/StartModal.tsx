@@ -1,26 +1,22 @@
 import React, { useEffect } from "react";
-import type { Dispatch } from "react";
-import Modal from "../../common/Modal/Modal";
+import Modal from "common/Modal/Modal";
 
-import { Screen } from "../../models/charsets.model";
+import { GameAction, Screen } from "models/charsets.model";
+import { useAppContext } from "context/AppContext";
 
-type StartModalProps = {
-  setScreen: Dispatch<Screen>;
-  setIsLoading: (value: boolean) => void
-};
+function StartModal() {
+  const { gameDispatch } = useAppContext();
 
-function StartModal({ setScreen, setIsLoading  }: StartModalProps) {
-  
   setInterval(() => {
     const logo = document.querySelector(".start-modal__logo");
     if (logo) {
       setTimeout(() => {
         logo.classList.remove("slide-in-top");
         logo.classList.remove("jello-diagonal-2");
-      }, 2000)
+      }, 2000);
       logo.classList.add("jello-diagonal-2");
     }
-  },4000)
+  }, 4000);
 
   const handleCloseTransition = () => {
     const logo = document.querySelector(".start-modal__logo");
@@ -31,33 +27,39 @@ function StartModal({ setScreen, setIsLoading  }: StartModalProps) {
     if (button) {
       button.classList.add("puff-out-center");
     }
-  }
+  };
 
-
- useEffect(() => {
-  setIsLoading(true)
-   const button = document.querySelector(".start-modal__btn");
-   if (button) {
-     button.addEventListener("click", handleCloseTransition);
-   }
- }, [])
+  useEffect(() => {
+    gameDispatch({ type: GameAction.SET_IS_GAME_LOADING, payload: true });
+    const button = document.querySelector(".start-modal__btn");
+    if (button) {
+      button.addEventListener("click", handleCloseTransition);
+    }
+  }, []);
 
   return (
     <Modal
-      buttonCallback={() => setScreen(Screen.modeSelector)}
+      buttonCallback={() =>
+        gameDispatch({ type: GameAction.SET_SCREEN, payload: Screen.modeSelector })
+      }
       buttonClassName={"start-modal__btn slide-in-bottom"}
       buttonText={"START"}
       modalBackground={"day-jp-bk.jpg"}
-      setIsLoading={setIsLoading}
+      setIsLoading={(value: boolean) =>
+        gameDispatch({ type: GameAction.SET_IS_GAME_LOADING, payload: value })
+      }
     >
       <div className="start-modal__gif">
-        <img src={require("../../img/wei-mao-fan-img-4052.gif").default} alt="sakura" />
-        <video src="../../img/vecteezy_sakura-falling-leaf-green-screen_16470436.mov"></video>
+        <img
+          src={require("img/wei-mao-fan-img-4052.gif").default}
+          alt="sakura"
+        />
+        <video src="img/vecteezy_sakura-falling-leaf-green-screen_16470436.mov"></video>
       </div>
       <div className="start-modal__logo slide-in-top">
         <img
           src={
-            require("../../img/hiragana-shuffle-logo-removebg-preview.png")
+            require("img/hiragana-shuffle-logo-removebg-preview.png")
               .default
           }
           alt="hiragana-shuffle-logo"

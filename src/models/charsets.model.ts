@@ -10,11 +10,25 @@ export enum Charset {
   HIRAGANA_WORDS = "HIRAGANA_WORDS",
   HIRAGANA_YOUON = "HIRAGANA_YOUON",
   HIRAGANA_TENTEN_MARU = "HIRAGANA_TENTEN_MARU",
+  HIRAGANA_CHIISAI = "HIRAGANA_CHIISAI",
   KATAKANA = "KATAKANA",
+  KATAKANA_FULLSET = "KATAKANA_FULLSET",
+  KATAKANA_WORDS = "KATAKANA_WORDS",
+  KATAKANA_YOUON = "KATAKANA_YOUON",
+  KATAKANA_TENTEN_MARU = "KATAKANA_TENTEN_MARU",
+  KATAKANA_CHIISAI = "KATAKANA_CHIISAI",
+  HIRAGANA_KATAKANA = "HIRAGANA_KATAKANA",
+  HIRAGANA_KATAKANA_FULLSET = "HIRAGANA_KATAKANA_FULLSET",
+  HIRAGANA_KATAKANA_WORDS = "HIRAGANA_KATAKANA_WORDS",
+  HIRAGANA_KATAKANA_YOUON = "HIRAGANA_KATAKANA_YOUON",
+  HIRAGANA_KATAKANA_TENTEN_MARU = "HIRAGANA_KATAKANA_TENTEN_MARU",
+  HIRAGANA_KATAKANA_CHIISAI = "HIRAGANA_KATAKANA_CHIISAI",
+  KANJI = "KANJI"
 }
 
 export enum Screen {
   start = "start",
+  mayorCharsetSelector = "mayor_charset_selector",
   charsetSelector = "charset_selector",
   modeSelector = "mode_selector",
   intro = "intro",
@@ -34,8 +48,7 @@ export class GameCharset {
   }
 
   updateCharset(char: JPChar) {
-   
-      let newCharset: JPChar[] = [];
+    let newCharset: JPChar[] = [];
     if (this.charset.length > 0) {
       newCharset = this.charset.filter(
         (character) => char.romaji !== character.romaji
@@ -45,30 +58,86 @@ export class GameCharset {
         return false;
       }
     }
-    return true
+    return true;
   }
 
   getRandomCharacter(): JPChar | null {
-      if (this.charset.length > 0) {
-        const randomChar = this.charset[Math.floor(Math.random() * this.charset.length)];
-        return randomChar;
-      } else {
-        return null;
-      }
+    if (this.charset.length > 0) {
+      const randomChar =
+        this.charset[Math.floor(Math.random() * this.charset.length)];
+      return randomChar;
+    } else {
+      return null;
     }
+  }
 }
 
-export type GameModeT = {
-  name: string
-  JPName: string
-  value: GameMode
-  isLocked: boolean
-}
+export type GameMode = {
+  name: string;
+  JPName: string;
+  value: GameModes;
+  isLocked: boolean;
+};
 
-export enum GameMode {
+export enum GameModes {
   study = "study",
   practice = "practice",
   timeTrial = "time-trial",
-  survival = "survival"
+  survival = "survival",
 }
 
+export type GameState = {
+  gameMode: GameModes;
+  mayorCharset: Charset;
+  screen: Screen;
+  isGameRunning: boolean;
+  isGameOver: boolean;
+  isGameLoading: boolean;
+  isAudioAllowed: boolean;
+};
+
+export enum GameAction {
+  SET_GAME_MODE = "SET_GAME_MODE",
+  SET_MAYOR_CHARSET = "SET_MAYOR_CHARSET",
+  SET_SCREEN = "SET_SCREEN",
+  SET_IS_GAME_RUNNING = "SET_IS_GAME_RUNNING",
+  SET_IS_GAME_OVER = "SET_IS_GAME_OVER",
+  SET_IS_GAME_LOADING = "SET_IS_GAME_LOADING",
+  SET_IS_AUDIO_ALLOWED = "SET_IS_AUDIO_ALLOWED",
+}
+export type GameReducerTypes =
+  | {
+      type: GameAction.SET_MAYOR_CHARSET;
+      payload: Charset;
+    }
+  | {
+      type: GameAction.SET_GAME_MODE;
+      payload: GameModes;
+    }
+  | {
+      type: GameAction.SET_SCREEN;
+      payload: Screen;
+    }
+  | {
+      type: GameAction.SET_IS_GAME_RUNNING;
+      payload: boolean;
+    }
+  | {
+      type: GameAction.SET_IS_GAME_OVER;
+      payload: boolean;
+    }
+  | {
+      type: GameAction.SET_IS_GAME_LOADING;
+      payload: boolean;
+    }
+  | {
+      type: GameAction.SET_IS_AUDIO_ALLOWED;
+      payload: boolean;
+    };
+
+    export type Mode = {
+      name: string;
+      id: keyof typeof Charset;
+      isLocked: boolean;
+    };
+    

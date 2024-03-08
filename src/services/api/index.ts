@@ -1,4 +1,4 @@
-import { Charset } from "../../models/charsets.model";
+import { Charset } from "models/charsets.model";
 
 const BASE_URL: string = "https://api.jsonbin.io/v3/b";
 

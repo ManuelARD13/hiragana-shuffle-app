@@ -1,36 +1,46 @@
-import React, { useEffect, useRef } from "react";
+//React
+import React, { useEffect, useRef, useState } from "react";
+//Hooks
+import { useAppContext } from "context/AppContext";
+//Components
+import { Screen } from "models/charsets.model";
 
-import { Screen } from "../../models/charsets.model";
+function SoundPlayer() {
+  const { gameState } = useAppContext();
 
-interface SoundPlayerProps {
-  screen: Screen;
-  isAudioAllowed: boolean;
-}
+  const [track, setTrack] = useState<HTMLAudioElement | null>(null);
 
-function SoundPlayer({ isAudioAllowed, screen }: SoundPlayerProps) {
-  const main = require("../../music/Main-Theme.mp3").default;
-  const mainTrack = new Audio(main);
-
-  const challenge = useRef<HTMLAudioElement>(null);
+  const challengeTrack = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
-    if (challenge.current) {
-      challenge.current.volume = 0.7;
+    const main = require("music/Main-Theme.mp3").default;
+    const mainTrack = new Audio(main);
+    setTrack(mainTrack);
+  }, []);
+  useEffect(() => {
+    if (challengeTrack.current) {
+      challengeTrack.current.volume = 0.7;
     }
-  }, [challenge.current]);
+  }, [challengeTrack.current]);
 
   return (
     <>
-      {screen === Screen.intro || screen === Screen.modeSelector || screen === Screen.charsetSelector ? (
-        <audio src={mainTrack.src} autoPlay muted={!isAudioAllowed} loop />
-      ) : null}
-      {screen === Screen.start ? (
+      {gameState.screen !== Screen.start &&
+      gameState.screen !== Screen.permissions ? (
         <audio
-          src={require("../../music/Challenge.mp3").default}
+          src={track?.src}
           autoPlay
-          muted={!isAudioAllowed}
+          muted={!gameState.isAudioAllowed}
           loop
-          ref={challenge}
+        />
+      ) : null}
+      {gameState.screen === Screen.start ? (
+        <audio
+          src={require("music/Challenge.mp3").default}
+          autoPlay
+          muted={!gameState.isAudioAllowed}
+          loop
+          ref={challengeTrack}
         />
       ) : null}
     </>

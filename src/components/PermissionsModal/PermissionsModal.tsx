@@ -1,11 +1,16 @@
 import React from "react";
-import Modal from "../../common/Modal/Modal";
+import Modal from "common/Modal/Modal";
+import { useAppContext } from "context/AppContext";
+import { GameAction, Screen } from "models/charsets.model";
 
-function PermissionsModal({ buttonCallback, setAudioAllowed }: { buttonCallback: () => void, setAudioAllowed: (value: boolean) => void }) {
+function PermissionsModal() {
+  const { gameState, gameDispatch } = useAppContext();
   const allowFullScreen = () => {
     document.body.requestFullscreen();
-    buttonCallback();
+    gameDispatch({type: GameAction.SET_SCREEN, payload: Screen.intro});
+    gameDispatch({type: GameAction.SET_IS_AUDIO_ALLOWED, payload: true});
   }
+
   return (
     <Modal
       buttonCallback={allowFullScreen}
@@ -16,8 +21,8 @@ function PermissionsModal({ buttonCallback, setAudioAllowed }: { buttonCallback:
       secondaryButtonText="Disallow"
       secondaryButtonClassName={"permissions-modal__btn--cancel"}
       secondaryButtonCallback={() => {
-        buttonCallback(); 
-        setAudioAllowed(false)
+        gameDispatch({ type: GameAction.SET_SCREEN, payload: Screen.intro });
+        gameDispatch({ type: GameAction.SET_IS_AUDIO_ALLOWED, payload: false }); 
       }}
     >
       <div className="permissions-modal__icon">
