@@ -19,7 +19,7 @@ function SoundPlayer() {
   }, []);
   useEffect(() => {
     if (challengeTrack.current) {
-      challengeTrack.current.volume = 0.7;
+      challengeTrack.current.volume = 0.2;
     }
   }, [challengeTrack.current]);
 

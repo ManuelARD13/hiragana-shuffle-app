@@ -46,7 +46,8 @@ function InputLayout() {
 
       setMessage("Wrong! Try again");
       setInput("");
-      if(gameState.gameMode === GameModes.survival){
+      
+      if(gameState.gameMode === "survival" as GameModes){
         gameDispatch({ type: GameAction.SET_IS_GAME_OVER, payload: true });
         gameDispatch({ type: GameAction.SET_IS_GAME_RUNNING, payload: false });
       }

@@ -78,7 +78,7 @@ function GameModeSelector() {
     >
       {gameModes.map((mode, index) => {
         return (
-          <>
+          <React.Fragment key={mode.value}>
             <label
               htmlFor={mode.value}
               key={mode.value}
@@ -100,7 +100,7 @@ function GameModeSelector() {
               className="game-mode__radio-input"
               onChange={checkboxHandler}
             />
-          </>
+          </React.Fragment>
         );
       })}
     </Modal>

@@ -3,17 +3,15 @@ import React from "react";
 //Hooks
 import { useAppContext } from "context/AppContext";
 //Types
-import { GameAction } from "models/charsets.model";
+import { GameAction, GameModes } from "models/charsets.model";
 //Components
 import Timer from "common/Timer/Timer";
 
+interface ScoresProps {
+  score: number;
+}
 
- interface ScoresProps {
-   score: number;
- }
-
-function Scores({score}: ScoresProps) {
-
+function Scores({ score }: ScoresProps) {
   const { gameState, gameDispatch } = useAppContext();
 
   return (
@@ -22,7 +20,14 @@ function Scores({score}: ScoresProps) {
         <p>
           SCORE <span>{score}</span>
         </p>
-        <Timer timerCallback={() => gameDispatch({ type: GameAction.SET_IS_GAME_OVER, payload: true })} startTime={315 - gameState.timeAttackDifficulty * 15} />
+        {gameState.gameMode === GameModes.timeTrial ? (
+          <Timer
+            timerCallback={() =>
+              gameDispatch({ type: GameAction.SET_IS_GAME_OVER, payload: true })
+            }
+            startTime={315 - gameState.timeAttackDifficulty * 15}
+          />
+        ) : null}
       </div>
     </>
   );

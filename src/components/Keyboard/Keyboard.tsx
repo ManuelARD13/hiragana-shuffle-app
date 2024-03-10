@@ -54,7 +54,7 @@ function Keyboard({ setInput, input, handleSubmit }: KeyboardProps) {
         <tbody>
           <tr className="keyboard__row">
             {keys.slice(0, 10).map((key) => (
-              <td>
+              <td key={key}>
                 <button
                   key={key}
                   id={key}
