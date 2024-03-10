@@ -24,13 +24,13 @@ const gameModes: GameMode[] = [
     name: "Time Trial!",
     JPName: "タイムトライアル!",
     value: GameModes.timeTrial,
-    isLocked: true,
+    isLocked: false,
   },
   {
     name: "Survival Mode!",
     JPName: "生存モード!",
     value: GameModes.survival,
-    isLocked: true,
+    isLocked: false,
   },
 ];
 
@@ -49,10 +49,12 @@ function GameModeSelector() {
       (mode) => mode.value === e.target.id
     )?.isLocked;
     if (Object.values(GameModes).includes(e.target.id as GameModes)) {
-      const selectedMode = GameModes[e.target.id as keyof typeof GameModes];
-      if (!isSelectorLocked) {
+      const modeIndex = Object.values(GameModes).indexOf(
+        e.target.id as GameModes
+      )
+      if (!isSelectorLocked && modeIndex) {
         btnContainer?.classList.add("active");
-        gameDispatch({ type: GameAction.SET_GAME_MODE, payload: selectedMode });
+        gameDispatch({ type: GameAction.SET_GAME_MODE, payload: Object.keys(GameModes)[modeIndex] as GameModes });
       } else {
         alert("is Locked!");
         btnContainer?.classList.remove("active");

@@ -23,7 +23,7 @@ export enum Charset {
   HIRAGANA_KATAKANA_YOUON = "HIRAGANA_KATAKANA_YOUON",
   HIRAGANA_KATAKANA_TENTEN_MARU = "HIRAGANA_KATAKANA_TENTEN_MARU",
   HIRAGANA_KATAKANA_CHIISAI = "HIRAGANA_KATAKANA_CHIISAI",
-  KANJI = "KANJI"
+  KANJI = "KANJI",
 }
 
 export enum Screen {
@@ -80,10 +80,10 @@ export type GameMode = {
 };
 
 export enum GameModes {
-  study = "study",
-  practice = "practice",
-  timeTrial = "time-trial",
-  survival = "survival",
+  study = "Study Mode",
+  practice = "Practice",
+  timeTrial = "Time Trial",
+  survival = "Survival Mode",
 }
 
 export type GameState = {
@@ -94,6 +94,7 @@ export type GameState = {
   isGameOver: boolean;
   isGameLoading: boolean;
   isAudioAllowed: boolean;
+  timeAttackDifficulty: number;
 };
 
 export enum GameAction {
@@ -104,6 +105,7 @@ export enum GameAction {
   SET_IS_GAME_OVER = "SET_IS_GAME_OVER",
   SET_IS_GAME_LOADING = "SET_IS_GAME_LOADING",
   SET_IS_AUDIO_ALLOWED = "SET_IS_AUDIO_ALLOWED",
+  SET_TIME_ATTACK_DIFFICULTY = "SET_TIME_ATTACK_DIFFICULTY",
 }
 export type GameReducerTypes =
   | {
@@ -133,11 +135,14 @@ export type GameReducerTypes =
   | {
       type: GameAction.SET_IS_AUDIO_ALLOWED;
       payload: boolean;
+    }
+  | {
+      type: GameAction.SET_TIME_ATTACK_DIFFICULTY;
+      payload: number;
     };
 
-    export type Mode = {
-      name: string;
-      id: keyof typeof Charset;
-      isLocked: boolean;
-    };
-    
+export type Mode = {
+  name: string;
+  id: keyof typeof Charset;
+  isLocked: boolean;
+};

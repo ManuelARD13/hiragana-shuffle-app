@@ -32,7 +32,7 @@ const hiraganaModes: Mode[] = [
   {
     name: "Chiisai",
     id: "HIRAGANA_CHIISAI",
-    isLocked: false,
+    isLocked: true,
   },
   {
     name: "Japanese Words",
@@ -49,22 +49,22 @@ const katakanaModes: Mode[] = [
   {
     name: "Ten-Ten & Maru",
     id: "KATAKANA_TENTEN_MARU",
-    isLocked: false,
+    isLocked: true,
   },
   {
     name: "Full Set!",
     id: "KATAKANA_FULLSET",
-    isLocked: false,
+    isLocked: true,
   },
   {
     name: "You-On",
     id: "KATAKANA_YOUON",
-    isLocked: false,
+    isLocked: true,
   },
   {
     name: "Chiisai",
     id: "KATAKANA_CHIISAI",
-    isLocked: false,
+    isLocked: true,
   },
   {
     name: "Japanese Words",
@@ -81,22 +81,22 @@ const hiraganaAndKatakanaModes: Mode[] = [
   {
     name: "Ten-Ten & Maru",
     id: "HIRAGANA_KATAKANA_TENTEN_MARU",
-    isLocked: false,
+    isLocked: true,
   },
   {
     name: "Full Set!",
     id: "HIRAGANA_KATAKANA_FULLSET",
-    isLocked: false,
+    isLocked: true,
   },
   {
     name: "You-On",
     id: "HIRAGANA_KATAKANA_YOUON",
-    isLocked: false,
+    isLocked: true,
   },
   {
     name: "Chiisai",
     id: "HIRAGANA_KATAKANA_CHIISAI",
-    isLocked: false,
+    isLocked: true,
   },
   {
     name: "Japanese Words",

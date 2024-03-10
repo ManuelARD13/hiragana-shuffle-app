@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 //Hooks
 import { useAppContext } from "context/AppContext";
 // Types
-import { Screen, GameAction } from "models/charsets.model";
+import { Screen, GameAction, GameModes } from "models/charsets.model";
 // Components
 import StartModal from "components/StartModal/StartModal";
 import PermissionsModal from "components/PermissionsModal/PermissionsModal";
@@ -39,6 +39,12 @@ function AppUI() {
     }
   }, [gameState.screen]);
 
+   const getGameModeTitle = () => {
+     const index =Object.keys(GameModes).indexOf(gameState.gameMode)
+     const title = Object.values(GameModes)[index];
+     return title
+   }
+
   return (
     <>
       <SoundPlayer />
@@ -65,7 +71,7 @@ function AppUI() {
               <p>大</p>
             </div>
             <div className="main__header-title">
-              <h1>Game Mode Title</h1>
+              <h1>{getGameModeTitle()}</h1>
             </div>
           </div>
 

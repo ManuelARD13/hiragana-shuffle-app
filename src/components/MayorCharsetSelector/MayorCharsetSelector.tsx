@@ -26,7 +26,7 @@ const mayorCharsets: Mode[] = [
   {
     name: "Kanji",
     id: "KANJI",
-    isLocked: false,
+    isLocked: true,
   },
 ];
 

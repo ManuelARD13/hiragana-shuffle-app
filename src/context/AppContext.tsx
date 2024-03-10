@@ -71,6 +71,11 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
           ...state,
           isAudioAllowed: action.payload,
         };
+      case GameAction.SET_TIME_ATTACK_DIFFICULTY:
+        return {
+          ...state,
+          timeAttackDifficulty: action.payload
+        }
       default:
         throw new Error("Invalid action type");
     }
@@ -84,6 +89,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
     isGameOver: false,
     isGameLoading: false,
     isAudioAllowed: true,
+    timeAttackDifficulty: 1
   });
 
   return (

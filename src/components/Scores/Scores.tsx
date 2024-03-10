@@ -1,38 +1,20 @@
-import React, { useEffect, useState } from "react";
+//React
+import React from "react";
+//Hooks
 import { useAppContext } from "context/AppContext";
+//Types
+import { GameAction } from "models/charsets.model";
+//Components
+import Timer from "common/Timer/Timer";
 
-interface ScoresProps {
-  score: number;
-  level: number;
-}
 
-function Scores({ score, level }: ScoresProps) {
+ interface ScoresProps {
+   score: number;
+ }
 
-  const { gameState } = useAppContext();
+function Scores({score}: ScoresProps) {
 
-  const [time, setTime] = useState(0);
-  const [timer, setTimer] = useState("00:00");
-
-  useEffect(() => {
-    if (!gameState.isGameRunning) {
-      setTime(0);
-    }
-    const timeout = setTimeout(() => {
-      setTime((t) => t + 1);
-    }, 1000);
-
-    toTime(time);
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [time]);
-
-  const toTime = (time: number) => {
-    var date = new Date("January 1, 1970 00:00");
-    date.setSeconds(time);
-    setTimer(date.toLocaleTimeString().substring(2, 7));
-  };
+  const { gameState, gameDispatch } = useAppContext();
 
   return (
     <>
@@ -40,9 +22,7 @@ function Scores({ score, level }: ScoresProps) {
         <p>
           SCORE <span>{score}</span>
         </p>
-        <p>
-          TIME <span>{timer}</span>
-        </p>
+        <Timer timerCallback={() => gameDispatch({ type: GameAction.SET_IS_GAME_OVER, payload: true })} startTime={315 - gameState.timeAttackDifficulty * 15} />
       </div>
     </>
   );
