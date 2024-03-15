@@ -79,7 +79,7 @@ function Modal({
                   className="modal__btn-return"
                   onClick={props.returnButtonCallback}
                 >
-                  <img src={require("img/flecha-hacia-atras.png").default} alt="go-back" />
+                  <img src={require("../../img/flecha-hacia-atras.png").default} alt="go-back" />
                 </button>
               </div>: null }
               <div className="modal__overlay"></div>

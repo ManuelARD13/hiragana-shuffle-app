@@ -2,37 +2,37 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "@/*": [
+      "./*": [
         "./*"
       ],
-      "@common/*": [
+      "common/*": [
         "./common/*"
       ],
-      "@components/*": [
+      "components/*": [
         "./components/*"
       ],
-      "@context/*": [
+      "context/*": [
         "./context/*"
       ],
-      "@hooks/*": [
+      "hooks/*": [
         "./hooks/*"
       ],
-      "@img/*": [
+      "img/*": [
         "./img/*"
       ],
-      "@layout/*": [
+      "layout/*": [
         "./layout/*"
       ],
-      "@models/*": [
+      "models/*": [
         "./models/*"
       ],
-      "@music/*": [
+      "music/*": [
         "./music/*"
       ],
-      "@sass/*": [
+      "sass/*": [
         "./sass/*"
       ],
-      "@services/*": [
+      "services/*": [
         "./services/*"
       ],
     },
