@@ -1,5 +1,5 @@
 //React
-import React, { Dispatch, useReducer, useState } from "react";
+import React, { Dispatch, useContext, useReducer, useState } from "react";
 //Hooks
 import { useGameData } from "../hooks";
 //Types
@@ -27,7 +27,7 @@ type Context = {
 const appCTX = React.createContext({} as Context);
 
 const useAppContext = () => {
-  return React.useContext(appCTX);
+  return useContext(appCTX);
 };
 
 const AppProvider = ({ children }: { children: React.ReactNode }) => {

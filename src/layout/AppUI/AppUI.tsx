@@ -40,9 +40,18 @@ function AppUI() {
   }, [gameState.screen]);
 
    const getGameModeTitle = () => {
-     const index =Object.keys(GameModes).indexOf(gameState.gameMode)
-     const title = Object.values(GameModes)[index];
-     return title
+     switch (gameState.gameMode) {
+       case GameModes.timeTrial:
+         return "Time Trial";
+       case GameModes.study:
+         return "Let's Study!";
+       case GameModes.practice:
+         return "Practice Mode";
+       case GameModes.survival:
+         return "Survival Mode";
+       default:
+         return "Hiragana Shuffle";
+     }
    }
 
   return (

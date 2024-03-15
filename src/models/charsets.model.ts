@@ -80,10 +80,10 @@ export type GameMode = {
 };
 
 export enum GameModes {
-  study = "Study Mode",
-  practice = "Practice",
-  timeTrial = "Time Trial",
-  survival = "Survival Mode",
+  study = "study",
+  practice = "practice",
+  timeTrial = "timeTrial",
+  survival = "survival",
 }
 
 export type GameState = {

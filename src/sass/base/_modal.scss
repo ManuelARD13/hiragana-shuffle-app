@@ -26,6 +26,16 @@
     animation: fade-out 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both,
                display-none 0.6s ease-in-out both;
   }
+  &__btn-return {
+    position: absolute;
+    top: 2%;
+    left: 4%;
+    width: 10vw;
+
+    background-color: transparent;
+    padding: 0;
+    border: none;
+  }
   &__btn-container {
     display: flex;
     gap: 1em;

@@ -7,7 +7,6 @@ import { Charset, GameAction, Screen, Mode } from "models/charsets.model";
 //components
 import SelectorsList from "common/SelectorList/SelectorList";
 
-
 const hiraganaModes: Mode[] = [
   {
     name: "Basic Set",
@@ -116,7 +115,8 @@ function CharsetSelector() {
         return katakanaModes;
       default:
         return hiraganaAndKatakanaModes;
-    }}
+    }
+  };
 
   const handleClose = () => {
     gameDispatch({
@@ -127,17 +127,27 @@ function CharsetSelector() {
       type: GameAction.SET_IS_GAME_RUNNING,
       payload: true,
     });
+    gameDispatch({
+      type: GameAction.SET_IS_GAME_OVER,
+      payload: false,
+    })
   };
 
   return (
-    <SelectorsList
-      title="Choose A Level Of Challenge!"
-      selectorList={selectList(gameState.mayorCharset)}
-      onCloseCallback={handleClose}
-      checkboxHandler={(id: string) => {
-        setCharsetName(Charset[id as keyof typeof Charset]);
-      }}
-    />
+      <SelectorsList
+        title="Choose A Level Of Challenge!"
+        selectorList={selectList(gameState.mayorCharset)}
+        onCloseCallback={handleClose}
+        checkboxHandler={(id: string) => {
+          setCharsetName(Charset[id as keyof typeof Charset]);
+        }}
+        returnButtonCallback={() => {
+          gameDispatch({
+            type: GameAction.SET_SCREEN,
+            payload: Screen.mayorCharsetSelector,
+          })
+        }}
+      />
   );
 }
 

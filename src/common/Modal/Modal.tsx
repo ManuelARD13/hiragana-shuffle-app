@@ -12,6 +12,8 @@ type ModalProps = {
   className?: string;
   modalBackground?: string;
   setIsLoading?: (value: boolean) => void;
+  returnButton?: boolean;
+  returnButtonCallback?: () => void;
 };
 
 function Modal({
@@ -28,10 +30,12 @@ function Modal({
   let modalStyles = {};
 
   if (props.modalBackground) {
-    const image = new Image()
+    const image = new Image();
     image.onload = () => {
-      if(props.setIsLoading){props.setIsLoading(false)}
-    }
+      if (props.setIsLoading) {
+        props.setIsLoading(false);
+      }
+    };
     image.src = require(`img/${props.modalBackground}`).default;
     modalStyles = {
       backgroundImage: `url(${image.src})`,
@@ -70,6 +74,14 @@ function Modal({
               style={modalStyles}
               ref={modal}
             >
+              { props.returnButton ? <div>
+                <button
+                  className="modal__btn-return"
+                  onClick={props.returnButtonCallback}
+                >
+                  <img src={require("img/flecha-hacia-atras.png").default} alt="go-back" />
+                </button>
+              </div>: null }
               <div className="modal__overlay"></div>
               {children}
               <div className="modal__btn-container">

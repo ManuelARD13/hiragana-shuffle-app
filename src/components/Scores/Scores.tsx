@@ -22,8 +22,10 @@ function Scores({ score }: ScoresProps) {
         </p>
         {gameState.gameMode === GameModes.timeTrial ? (
           <Timer
-            timerCallback={() =>
+            timerCallback={() => {
+              gameDispatch({ type: GameAction.SET_IS_GAME_RUNNING, payload: false })
               gameDispatch({ type: GameAction.SET_IS_GAME_OVER, payload: true })
+            }
             }
             startTime={315 - gameState.timeAttackDifficulty * 15}
           />

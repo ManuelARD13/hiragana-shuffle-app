@@ -41,6 +41,7 @@ function MayorCharsetSelector() {
   };
 
   return (
+    <>
     <SelectorsList
       title="Which Character Set Do We Wanna Play Today?"
       selectorList={mayorCharsets}
@@ -51,7 +52,14 @@ function MayorCharsetSelector() {
           payload: Charset[id as keyof typeof Charset],
         });
       }}
+      returnButtonCallback={() => {
+        gameDispatch({
+          type: GameAction.SET_SCREEN,
+          payload: Screen.modeSelector,
+        })
+      }}
     />
+    </>
   );
 }
 

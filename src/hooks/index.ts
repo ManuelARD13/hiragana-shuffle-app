@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-import { endPoints } from "../services/api";
+import { endPoints } from "services/api";
 
-import { GameCharset, GameLogic, type JPChar } from "models/charsets.model";
+import { GameCharset, type JPChar } from "models/charsets.model";
 
 export const useGameData = (charsetName: string) => {
   const [charSet, setCharset] = useState<JPChar[] | null>(null);

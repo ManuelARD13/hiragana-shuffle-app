@@ -4,8 +4,10 @@
   justify-content: initial;
   padding-block: 2em;
   h1 {
+    width: 19ch;
     text-align: center;
-    font-size: 1.65rem;
+    font-size: 1.175rem;
+    line-height: 1.75rem;
     color: #090909;
   }
   &__fieldset {
@@ -26,15 +28,11 @@
       background-color: #06d6a0;
       color: $text-color-light;
       border: 4px solid $text-color-light;
-      // transform: translateZ(0) (0, -10px);
-      // transition: transform 0.15s ease;
     }
   }
   &__radio-input--locked {
     display: none;
     &:checked + .locked {
-      // transform: translateZ(0) translate(0, -10px) ;
-      // transition: transform 0.15s ease;
       background-color: rgba(128, 128, 128);
       color: $text-color-light;
       border: 4px solid $text-color-light;
@@ -69,6 +67,7 @@
   }
   &__btn {
     display: none;
+    justify-content: center;
     font-family: $font-mochiy-pop-p-one;
     font-size: 1.175rem;
     background-color: $primary-color;

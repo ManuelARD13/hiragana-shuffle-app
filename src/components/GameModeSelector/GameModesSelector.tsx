@@ -3,7 +3,12 @@ import React, { useEffect } from "react";
 //Hooks
 import { useAppContext } from "context/AppContext";
 //Types
-import { GameModes, Screen, type GameMode, GameAction } from "models/charsets.model";
+import {
+  GameModes,
+  Screen,
+  type GameMode,
+  GameAction,
+} from "models/charsets.model";
 //Components
 import Modal from "common/Modal/Modal";
 
@@ -49,20 +54,21 @@ function GameModeSelector() {
       (mode) => mode.value === e.target.id
     )?.isLocked;
     if (Object.values(GameModes).includes(e.target.id as GameModes)) {
-      const modeIndex = Object.values(GameModes).indexOf(
-        e.target.id as GameModes
-      )
-      if (!isSelectorLocked && modeIndex) {
+      if (!isSelectorLocked) {
         btnContainer?.classList.add("active");
-        gameDispatch({ type: GameAction.SET_GAME_MODE, payload: Object.keys(GameModes)[modeIndex] as GameModes });
+        gameDispatch({
+          type: GameAction.SET_GAME_MODE,
+          payload: GameModes[e.target.id as keyof typeof GameModes],
+        });
       } else {
-        alert("is Locked!");
         btnContainer?.classList.remove("active");
       }
     } else {
       throw new Error("Invalid Game Mode, type structure violation");
     }
   };
+
+  
 
   return (
     <Modal
@@ -75,6 +81,7 @@ function GameModeSelector() {
           payload: Screen.mayorCharsetSelector,
         })
       }
+      modalBackground={"day-jp-bk.jpg"}
     >
       {gameModes.map((mode, index) => {
         return (
@@ -82,7 +89,7 @@ function GameModeSelector() {
             <label
               htmlFor={mode.value}
               key={mode.value}
-              className={`game-mode ${
+              className={`game-mode slide-in-tr ${
                 index === 0
                   ? "first-item"
                   : index === gameModes.length - 1

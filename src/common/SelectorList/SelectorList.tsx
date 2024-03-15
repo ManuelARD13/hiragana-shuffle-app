@@ -10,6 +10,7 @@ type SelectorsListProps = {
   selectorList: Mode[];
   onCloseCallback: () => void;
   checkboxHandler: (id: string) => void;
+  returnButtonCallback?: () => void;
 };
 
 function SelectorsList({
@@ -17,6 +18,7 @@ function SelectorsList({
   selectorList,
   onCloseCallback,
   checkboxHandler,
+  returnButtonCallback
 }: SelectorsListProps) {
   const [isModeSelected, setIsModeSelected] = useState<boolean>(false);
 
@@ -52,8 +54,9 @@ function SelectorsList({
 
   const handleCloseTransition = () => {
     const radioSelectors = Array.from(document.getElementsByTagName("label"));
-    if (button) {
+    if (button && btnBackground) {
       button.classList.add("puff-out-center");
+      btnBackground.classList.remove("btn-background");
     }
     if (radioSelectors.length > 0) {
       radioSelectors.forEach((radioSelector) => {
@@ -115,6 +118,8 @@ function SelectorsList({
       modalBackground={"day-jp-bk.jpg"}
       className="mode-selector"
       buttonClassName="mode-selector__btn"
+      returnButton
+      returnButtonCallback={returnButtonCallback}
     >
       <h1>{title}</h1>
       <fieldset className="mode-selector__fieldset">
