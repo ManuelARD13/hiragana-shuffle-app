@@ -1,0 +1,32 @@
+@use "../abstracts/variables" as *;
+
+.study-mode {
+  position: relative;
+  background-color: $neutral-color;
+  border: 3px solid brown;
+  width: 95%;
+  height: 100vh;
+  margin: 0 auto;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+
+  &__btn--container {
+    position: sticky;
+    bottom: 10px;
+    button {
+      font-family: $font-mochiy-pop-p-one;
+      font-size: 0.775rem;
+      background-color: $primary-color;
+      color: $text-color-light;
+      border: 2px solid $text-color-light;
+      border-radius: 2em;
+      box-shadow: $box-shadow;
+      margin-top: 0.6em;
+      padding: 0.9em;
+      width: 12em;
+    }
+  }
+}

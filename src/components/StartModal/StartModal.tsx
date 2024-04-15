@@ -54,7 +54,6 @@ function StartModal() {
           src={require("img/wei-mao-fan-img-4052.gif").default}
           alt="sakura"
         />
-        <video src="img/vecteezy_sakura-falling-leaf-green-screen_16470436.mov"></video>
       </div>
       <div className="start-modal__logo slide-in-top">
         <img

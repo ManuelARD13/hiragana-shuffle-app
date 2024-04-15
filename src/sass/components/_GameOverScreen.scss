@@ -1,0 +1,36 @@
+@use "../abstracts/variables" as *;
+
+.game-over {
+  background-color: rgba(78, 31, 63, 0.514);
+  background-blend-mode: saturation;
+  font-family: $font-zen-maru-gothic;
+  text-align: center;
+  &__container {
+    h1 {
+      margin: 0.2em;
+      font-family: $font-mochiy-pop-p-one;
+    }
+    h2 {
+      margin: 0.2em;
+      font-size: 2.5rem;
+      color: $text-color-light;
+      text-shadow: $box-shadow;
+    }
+  }
+  &__btn {
+    font-family: $font-mochiy-pop-p-one;
+    font-size: 1.175rem;
+    background-color: $primary-color;
+    color: $text-color-light;
+    border: 2px solid $text-color-light;
+    border-radius: 2em;
+    box-shadow: $box-shadow;
+    margin-top: 0.6em;
+    padding: 0.9em;
+    width: 13em;
+    &:hover {
+      transform: translate(0, -5px);
+      transition: transform 0.15s ease-in-out;
+    }
+  }
+}

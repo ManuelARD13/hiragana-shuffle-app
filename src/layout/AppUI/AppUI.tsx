@@ -14,6 +14,7 @@ import Loader from "common/Loader/Loader";
 import GameModeSelector from "components/GameModeSelector/GameModesSelector";
 import CharsetSelector from "components/CharsetSelector/CharsetSelector";
 import MayorCharsetSelector from "components/MayorCharsetSelector/MayorCharsetSelector";
+import StudyMode from "components/StudyMode/StudyMode";
 
 function AppUI() {
   const { gameState, gameDispatch } = useAppContext();
@@ -39,32 +40,36 @@ function AppUI() {
     }
   }, [gameState.screen]);
 
-   const getGameModeTitle = () => {
-     switch (gameState.gameMode) {
-       case GameModes.timeTrial:
-         return "Time Trial";
-       case GameModes.study:
-         return "Let's Study!";
-       case GameModes.practice:
-         return "Practice Mode";
-       case GameModes.survival:
-         return "Survival Mode";
-       default:
-         return "Hiragana Shuffle";
-     }
-   }
+  const getGameModeTitle = () => {
+    switch (gameState.gameMode) {
+      case GameModes.timeTrial:
+        return "Time Trial";
+      case GameModes.study:
+        return "Let's Study!";
+      case GameModes.practice:
+        return "Practice Mode";
+      case GameModes.survival:
+        return "Survival Mode";
+      default:
+        return "Hiragana Shuffle";
+    }
+  };
 
   return (
     <>
       <SoundPlayer />
       {gameState.isGameLoading && <Loader />}
-      {gameState.screen === Screen.permissions ? (
-        <PermissionsModal />
-      ) : null}
+      {gameState.screen === Screen.permissions ? <PermissionsModal /> : null}
       {gameState.screen === Screen.intro ? <StartModal /> : null}
       {gameState.screen === Screen.modeSelector ? <GameModeSelector /> : null}
-      {gameState.screen === Screen.mayorCharsetSelector ? <MayorCharsetSelector /> : null}
+      {gameState.screen === Screen.mayorCharsetSelector && gameState.gameMode !== GameModes.study ? (
+        <MayorCharsetSelector screen={Screen.charsetSelector} />
+      ) : null}
       {gameState.screen === Screen.charsetSelector ? <CharsetSelector /> : null}
+      {gameState.screen === Screen.study ||
+      gameState.screen === Screen.characterTable ? (
+        <StudyMode />
+      ) : null}
 
       {gameState.isGameRunning ? (
         <main

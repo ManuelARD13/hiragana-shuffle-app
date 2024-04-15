@@ -1,21 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Modal from 'common/Modal/Modal';
 import { useAppContext } from 'context/AppContext';
 import { GameAction, Screen } from 'models/charsets.model';
 
 function GameOverModal() {
-  const { gameDispatch, gameState } = useAppContext();
+  const { gameDispatch } = useAppContext();
   const handleClose = () => {
-    console.log(gameState)
-    // gameDispatch({ type: GameAction.SET_IS_GAME_OVER, payload: false });
     gameDispatch({ type: GameAction.SET_SCREEN, payload: Screen.modeSelector });
-    console.log(gameState)
   }
+
   return (
-    <Modal buttonCallback={handleClose} buttonText={"Back to Main Menu"}>
-      <div>
+    <Modal
+      className='game-over'
+      buttonClassName='game-over__btn' 
+      buttonCallback={handleClose} 
+      buttonText={"Back to Main Menu"}
+      modalBackground='day-jp-bk.jpg'
+    >
+      <div className="game-over__container">
         <h1>Game Over</h1>
+        <h2>ゲームオーバー</h2>
       </div>
     </Modal>
   );

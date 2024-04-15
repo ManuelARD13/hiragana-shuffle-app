@@ -17,7 +17,7 @@ const gameModes: GameMode[] = [
     name: "Let's Study!",
     JPName: "勉強しましょう!",
     value: GameModes.study,
-    isLocked: true,
+    isLocked: false,
   },
   {
     name: "Practice",
@@ -40,7 +40,7 @@ const gameModes: GameMode[] = [
 ];
 
 function GameModeSelector() {
-  const { gameDispatch } = useAppContext();
+  const { gameDispatch, gameState } = useAppContext();
 
   let btnContainer = document.querySelector(".modal__btn-container");
 
@@ -75,12 +75,19 @@ function GameModeSelector() {
       buttonText={"Continue"}
       className="game-mode__modal"
       buttonClassName="game-mode__btn"
-      buttonCallback={() =>
-        gameDispatch({
-          type: GameAction.SET_SCREEN,
-          payload: Screen.mayorCharsetSelector,
-        })
-      }
+      buttonCallback={() => {
+        if(gameState.gameMode === GameModes.study){
+          gameDispatch({
+            type: GameAction.SET_SCREEN,
+            payload: Screen.study,
+          })
+        } else {
+          gameDispatch({
+            type: GameAction.SET_SCREEN,
+            payload: Screen.mayorCharsetSelector,
+          })
+        }
+      }}
       modalBackground={"day-jp-bk.jpg"}
     >
       {gameModes.map((mode, index) => {

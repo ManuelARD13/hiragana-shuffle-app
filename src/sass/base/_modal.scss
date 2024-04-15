@@ -1,17 +1,18 @@
 @use "../abstracts/variables" as *;
 
 .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
+  position: relative;
+  // top: 0;
+  // left: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100svh;
-  width: 100%;
+  width: min(390px, 100%);
   background-position: center;
   background-color: whitesmoke;
+  overflow: hidden;
 
   &__overlay {
     display: block;

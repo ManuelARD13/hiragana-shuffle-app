@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 80%;
+  width: 100%;
   height: 95%;
   margin: 0 auto;
   background-color: rgba(255, 255, 255, 0.75);
@@ -18,7 +18,7 @@
   border-radius: 0.1em;
   box-shadow: $box-shadow;
   font-size: 13.5rem;
-  font-family: $font-zen-maru-gothic;
+  font-family: $font-mochiy-pop-p-one;
   p {
     margin: 0;
     padding-bottom: 0.1em;
@@ -26,9 +26,32 @@
 }
 
 .you-on--active {
-  letter-spacing: -30px;
+  letter-spacing: 5px;
   font-size: 10rem;
-  p {
-    margin-right: 0.24em;
-  }
+}
+
+.words--active-3 {
+  letter-spacing: 4px;
+  font-size: 7rem;
+}
+
+.words--active-4 {
+  letter-spacing: 3px;
+  font-size: 5.35rem
+}
+
+.words--active-5 {
+  letter-spacing: 2px;
+  font-size: 4.4rem;
+ 
+}
+
+.words--active-6 {
+  letter-spacing: 2px;
+  font-size: 3.5rem;
+}
+
+.words--active-7 {
+  letter-spacing: 2px;
+  font-size: 2.5rem;
 }

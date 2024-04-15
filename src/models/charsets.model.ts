@@ -33,6 +33,8 @@ export enum Screen {
   modeSelector = "mode_selector",
   intro = "intro",
   permissions = "permissions",
+  characterTable = "character_table",
+  study = "study",
 }
 
 export interface GameLogic {

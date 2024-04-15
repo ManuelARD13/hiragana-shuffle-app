@@ -68,7 +68,7 @@ function Keyboard({ setInput, input, handleSubmit }: KeyboardProps) {
           </tr>
           <tr className="keyboard__row">
             {keys.slice(10, 19).map((key) => (
-              <td>
+              <td key={key}>
                 <button
                   key={key}
                   id={key}
@@ -83,7 +83,7 @@ function Keyboard({ setInput, input, handleSubmit }: KeyboardProps) {
           </tr>
           <tr className="keyboard__row--last">
             {keys.slice(19, keys.length).map((key) => (
-              <td>
+              <td key={key}>
                 <button
                   key={key}
                   id={key}
@@ -111,7 +111,7 @@ function Keyboard({ setInput, input, handleSubmit }: KeyboardProps) {
                 className="keyboard__key--enter"
                 onClick={handleClick}
               >
-                行け！
+                Go / 行け！
               </button>
             </td>
           </tr>

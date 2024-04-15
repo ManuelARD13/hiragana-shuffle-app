@@ -22,6 +22,7 @@ export const useGameData = (charsetName: string) => {
   });
 
   useEffect(() => {
+    setIsLoading(true);
     const API = process.env.REACT_APP_X_MASTER_KEY;
     const fetchData = async () => {
       const response = await fetch(endPoints(charsetName), {

@@ -4,6 +4,18 @@ body {
   color: $text-color-dark;
   font-family: $font-mochiy-pop-p-one;
   margin: 0;
+  background-color: #070707;
+}
+
+#root {
+  max-width: 390px;
+  margin: 0 auto;
+  background-color: $primary-color;
+}
+
+#modal {
+  margin: 0 auto;
+  max-width: 390px;
 }
 
 .main {

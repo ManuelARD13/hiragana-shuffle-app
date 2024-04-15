@@ -29,14 +29,14 @@ const hiraganaModes: Mode[] = [
     isLocked: false,
   },
   {
-    name: "Chiisai",
+    name: "Chiisai Words",
     id: "HIRAGANA_CHIISAI",
     isLocked: true,
   },
   {
-    name: "Japanese Words",
+    name: "Basic Words",
     id: "HIRAGANA_WORDS",
-    isLocked: true,
+    isLocked: false,
   },
 ];
 const katakanaModes: Mode[] = [

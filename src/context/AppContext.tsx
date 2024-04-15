@@ -17,6 +17,7 @@ import {
 
 type Context = {
   charSet: JPChar[] | null;
+  charsetName: Charset;
   setCharsetName: Dispatch<Charset>;
   isLoading: boolean;
   gameLogic: GameCharset;
@@ -37,6 +38,12 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const gameReducer = (state: GameState, action: GameReducerTypes) => {
     switch (action.type) {
       case GameAction.SET_GAME_MODE:
+        if(action.payload === GameModes.study){
+          return {
+            ...state,
+            gameMode: action.payload
+          }
+        }
         return {
           ...state,
           gameMode: action.payload,
@@ -82,19 +89,20 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const [gameState, gameDispatch] = useReducer(gameReducer, {
-    gameMode: GameModes.practice,
+    gameMode: GameModes.study,
     mayorCharset: Charset.HIRAGANA,
     screen: Screen.permissions,
     isGameRunning: false,
     isGameOver: false,
     isGameLoading: false,
-    isAudioAllowed: true,
+    isAudioAllowed: false,
     timeAttackDifficulty: 1
   });
 
   return (
     <appCTX.Provider
       value={{
+        charsetName,
         setCharsetName,
         //Hook Data
         charSet,

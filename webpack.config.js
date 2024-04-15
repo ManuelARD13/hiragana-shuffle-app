@@ -1,8 +1,10 @@
+const webpack  = require('webpack')
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const TerserPlugin = require("terser-webpack-plugin")
 const { CleanWebpackPlugin } = require("clean-webpack-plugin")
+const dotenv = require("dotenv-webpack");
 const path = require("path");
 
 module.exports = {
@@ -70,6 +72,10 @@ module.exports = {
       filename: "[name].css",
     }),
     new CleanWebpackPlugin(),
+    new dotenv({ path: "./.env" }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    })
   ],
   optimization: {
     minimize: true,
